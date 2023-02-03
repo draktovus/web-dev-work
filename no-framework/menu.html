@@ -99,33 +99,11 @@
             border-color: #eeee00;
         }
 
-        .focus-dropdown-content{
-            display: none;
-            position: absolute;
-            flex-direction: column;
-            background-color: #009b00;
-            width: 100%;
-            padding-top: 10px;
-        }
-
-        .focus-dropdown-content a{
-            color: rgb(51, 53, 103);
-            position: relative;
-            padding: 10px;
-            text-decoration: none;
-            display: block;
-            text-align: left;
-        }
-
-        .focus-dropdown-content a:hover {
-            background-color: #00FF00;
-        }
-
         .focus-dropdown:focus-within {
             position: relative;
         }
 
-        .focus-dropdown:focus-within > .focus-dropdown-content{
+        .focus-dropdown:focus-within > .dropdown-content{
             display: flex;
         }
     </style>
@@ -144,9 +122,9 @@
                     <a href="">Close</a>
                 </div>
             </li>
-            <li class="nav-item focus-dropdown">
+            <li class="nav-item dropdown focus-dropdown">
                 <a tabindex="0">Edit</a>
-                <div class="focus-dropdown-content">
+                <div class="dropdown-content">
                     <a href="">Undo</a>
                     <a href="">Redo</a>
                     <a href="">Cut</a>
