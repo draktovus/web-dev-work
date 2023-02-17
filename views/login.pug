@@ -8,46 +8,27 @@ html(lang="en")
         link(rel="stylesheet" href='https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css')
         title Login
     body 
-    <div class="section">
-            <div class="container">
-                <div class="columns is-centered">
-                    <div class="column is-8">
-                        <form action="" class="box">
-                            <div class="field">
-                                <label class="label is-size-3">Login</label>
-                            </div>
-                            <div class="field">
-                                <label for="" class="label">Username</label>
-                                <div class="control has-icons-left">
-                                    <input class="input"  type="text" name="" id="" placeholder="Username">
-                                    <span class="icon is-small is-left">
-                                        <i class="fas fa-user"></i>
-                                    </span>
-                                </div>
-                            </div>
+        .section 
+                .container
+                    .columns.is-centered
+                        .column.is-8
+                            form(action="" class='box') 
+                                .field
+                                    label.label.is-size-3 Login
+                                .field
+                                    label.label Username
+                                    .control.has-icons-left
+                                        input(class="input" type="text" name="" id="" placeholder="Username")
+                                        span.icon.is-small.is-left
+                                            i.fas.fa-user
 
-                            <div class="field">
-                                <label for="" class="label">Password</label>
-                                <div class="control has-icons-left">
-                                    <input class="input"  type="password" name="" id="" placeholder="Password">
-                                    <span class="icon is-small is-left">
-                                        <i class="fas fa-key"></i>
-                                    </span>
-                                </div>
-                            </div>
-
-                            <div class="field">
-                                <p class="control">
-                                  <button class="button is-success">
-                                    Login
-                                  </button>
-                                  <button class="button is-info">
-                                    Sign Up
-                                  </button>
-                                </p>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+                                .field
+                                    label(for="" class="label") Password
+                                    div(class="control has-icons-left")
+                                        input(class="input" type="password" name="" id="" placeholder="Password")
+                                        span(class="icon is-small is-left")
+                                            i(class="fas fa-key")
+                                .field
+                                    p.control
+                                    button(class="button is-success") Login
+                                    button(class="button is-info") Sign Up

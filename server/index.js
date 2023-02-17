@@ -13,6 +13,10 @@ app.get('/', (req, res) => {
     res.render('index', {title:"ExerciseMania", message:"Welcome to ExerciseMania!"})
 })
 
+app.get('/login', (req, res) => {
+    res.render('login', {title:"ExerciseMania", message:"Welcome to ExerciseMania!"})
+})
+
 app.listen(port, ()=>{
     console.log(`Server running at http://${hostname}:${port}`);
 })
