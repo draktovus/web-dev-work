@@ -7,8 +7,10 @@ const app =  express();
 const hostname = '127.0.0.1';
 const port = process.env.PORT || 3000;
 
+app.set('view engine', 'pug');
+
 app.get('/', (req, res) => {
-    res.send("Exercise app test nodemon")
+    res.render('index', {title:"ExerciseMania", message:"Welcome to ExerciseMania!"})
 })
 
 app.listen(port, ()=>{
