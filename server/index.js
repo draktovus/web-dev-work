@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
 })
 
 app.get('/login', (req, res) => {
-    res.render('login', {title:"ExerciseMania", message:"Welcome to ExerciseMania!"})
+    res.render('login', {})
 })
 
 app.listen(port, ()=>{
