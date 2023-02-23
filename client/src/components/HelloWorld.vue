@@ -1,7 +1,8 @@
 <script setup lang="ts">
-defineProps<{
-  msg: string
-}>()
+  defineProps<{
+    msg: string,
+    home: Boolean,
+  }>()
 </script>
 
 <template>
