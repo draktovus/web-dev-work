@@ -1,21 +1,26 @@
 <script setup lang="ts">
-defineProps<{
-  title: string,
-  msg: string,
-}>();
+import { ref } from 'vue'
+const isModalActive = ref(true)
 
+function toggleModal(){
+  isModalActive.value = !isModalActive.value
+}
+defineProps<{
+  title: string
+  msg: string
+}>()
 </script>
 
 <template>
-  <div class="section">
-    <div class="notification is-success">
-      {{ title }}
-      <button class="delete"></button>
+  <div class="modal" :class="{'is-active':isModalActive}">
+    <div class="modal-background"></div>
+    <div class="modal-content">
+      <div class="box">
+        {{ title }}
       {{ msg }}
-      You’ve successfully created a project with
-      <a href="https://vitejs.dev/" target="_blank" rel="noopener">Vite</a> +
-      <a href="https://vuejs.org/" target="_blank" rel="noopener">Vue 3</a>. What's next?
+      </div>
     </div>
+    <button class="modal-close is-large" aria-label="close" @click="toggleModal"></button>
   </div>
 </template>
 

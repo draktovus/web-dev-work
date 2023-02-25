@@ -4,15 +4,14 @@ import NavBar from './components/NavBar.vue'
 import { reactive } from 'vue';
 import axios from 'axios';
 import  HelloWorld from './components/HelloWorld.vue'
+import { onMounted } from 'vue';
 
 const data = reactive({
     msg:"",
     title:"",
   }
 )
-
-const jsonRequest = async () => {
-  console.log('makign request')
+onMounted(async ()=>{
   try {
     const res = await axios.get(`http://127.0.0.1:3000/`)
     data.msg = res.data.message
@@ -20,8 +19,7 @@ const jsonRequest = async () => {
   } catch (err) {
     console.log(err)
   }
-}
-jsonRequest()
+})
 </script>
 
 <template>

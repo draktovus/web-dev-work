@@ -10,13 +10,13 @@ const port = process.env.PORT || 3000;
 
 app.set('view engine', 'pug');
 
+// Allows client VueJS to access server API
 app.use(cors({
     origin: 'http://localhost:5173'
 }))
 
 app.get('/', (req, res) => {
     res.send({ title: "ExerciseMania", message: "Welcome to ExerciseMania!" })
-    //res.render('index', { title: "ExerciseMania", message: "Welcome to ExerciseMania!" })
 })
 
 app.get('/login', (req, res) => {
