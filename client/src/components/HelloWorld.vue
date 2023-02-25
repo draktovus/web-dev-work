@@ -1,12 +1,15 @@
 <script setup lang="ts">
 defineProps<{
-  msg: string
-}>()
+  title: string,
+  msg: string,
+}>();
+
 </script>
 
 <template>
   <div class="section">
     <div class="notification is-success">
+      {{ title }}
       <button class="delete"></button>
       {{ msg }}
       You’ve successfully created a project with
