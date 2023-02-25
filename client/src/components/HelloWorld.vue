@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-const isModalActive = ref(true)
+const isModalActive = ref(false)
 
 function toggleModal(){
   isModalActive.value = !isModalActive.value

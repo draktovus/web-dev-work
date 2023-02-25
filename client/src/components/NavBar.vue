@@ -3,8 +3,8 @@ import { RouterLink } from 'vue-router'
 </script>
 
 <template>
-  <nav class="navbar is-primary">
-    <div class="container">
+  <nav class="navbar is-dark">
+    <div class="container is-fluid">
       <div class="navbar-brand">
         <RouterLink class="navbar-item" to="/">
           <span class="icon-text">
@@ -72,4 +72,5 @@ import { RouterLink } from 'vue-router'
   </nav>
 </template>
 
-<style scoped></style>
+<style scoped>
+</style>
