@@ -1,15 +1,17 @@
 <template>
-  <div class="about">
-    <h1>This is an about page</h1>
+  <div class="section">
+    <div class="columns">
+      <div class="column">
+        <h1>This is an about page</h1>
+      </div>
+      <div class="column">
+        <p class="bd-notification is-primary">
+          <code class="html">is-narrow</code><br />
+          First Column
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
-<style>
-@media (min-width: 1024px) {
-  .about {
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-  }
-}
-</style>
+<style></style>

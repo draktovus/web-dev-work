@@ -1,5 +1,7 @@
 # client
 
+[FA with Vue](https://fontawesome.com/docs/web/use-with/vue/)
+
 This template should help get you started developing with Vue 3 in Vite.
 
 ## Recommended IDE Setup
