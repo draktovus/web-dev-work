@@ -1,10 +1,20 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
+import LoginBadge from './LoginBadge.vue'
+import { useSession } from '@/models/session'
+
+const session = useSession()
+
+const isMobileMenuActive = ref(false)
+function toggleMenu() {
+  isMobileMenuActive.value = !isMobileMenuActive.value
+}
 </script>
 
 <template>
-  <nav class="navbar is-dark">
-    <div class="container is-fluid">
+  <nav class="navbar is-black">
+    <div class="container">
       <div class="navbar-brand">
         <RouterLink class="navbar-item" to="/">
           <span class="icon-text">
@@ -14,14 +24,19 @@ import { RouterLink } from 'vue-router'
             <span> Home </span>
           </span>
         </RouterLink>
-        <button id="navbar-burger" class="navbar-burger" data-target="navbarMenu">
+        <button
+          id="navbar-burger"
+          class="navbar-burger"
+          :class="{ 'is-active': isMobileMenuActive }"
+          @click="toggleMenu"
+        >
           <span></span>
           <span></span>
           <span></span>
         </button>
       </div>
 
-      <div class="navbar-menu" id="navbarMenu">
+      <div class="navbar-menu" :class="{ 'is-active': isMobileMenuActive }">
         <!-- needs is-active to be shown on mobile -->
         <div class="navbar-start">
           <RouterLink class="navbar-item" to="/profile">
@@ -30,47 +45,33 @@ import { RouterLink } from 'vue-router'
               <span>Profile</span>
             </span>
           </RouterLink>
-
-          <div class="navbar-item has-dropdown is-hoverable">
-            <RouterLink class="navbar-link" to="/about">
-              <span class="icon-text">
-                <span class="icon">
-                  <i class="fa-solid fa-circle-info"></i>
-                </span>
-                <span>About</span>
-              </span>
-            </RouterLink>
+          <RouterLink class="navbar-item" to="/statistics">
+            <span class="icon-text">
+              <span class="icon"><i class="fas fa-chart-line"></i></span>
+              <span>Statistics</span>
+            </span>
+          </RouterLink>
+          <RouterLink class="navbar-item" to="/friends">
+            <span class="icon-text">
+              <span class="icon"><i class="fas fa-people-group"></i></span>
+              <span>Friend Activity</span>
+            </span>
+          </RouterLink>
+          <div class="navbar-item has-dropdown is-hoverable" v-if="session.user?.isAdmin">
+            <a class="navbar-link"> Admin </a>
 
             <div class="navbar-dropdown">
-              <RouterLink class="navbar-item" to="/">1</RouterLink>
-              <RouterLink class="navbar-item" to="/">2</RouterLink>
-              <hr class="navbar-divider" />
-              <RouterLink class="navbar-item" to="/">3</RouterLink>
-              <RouterLink class="navbar-item" to="/">4</RouterLink>
+              <RouterLink class="navbar-item" to="/admin/users">Users</RouterLink>
             </div>
           </div>
         </div>
 
         <div class="navbar-end">
-          <div class="navbar-item">
-            <div class="field is-grouped">
-              <p class="control">
-                <RouterLink to="/login">
-                  <a class="bd-tw-button button">
-                    <span class="icon">
-                      <i class="fa-solid fa-right-to-bracket"></i>
-                    </span>
-                    <span>Login</span>
-                  </a>
-                </RouterLink>
-              </p>
-            </div>
-          </div>
+          <LoginBadge />
         </div>
       </div>
     </div>
   </nav>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

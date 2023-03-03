@@ -2,7 +2,7 @@
 import { ref } from 'vue'
 const isModalActive = ref(false)
 
-function toggleModal(){
+function toggleModal() {
   isModalActive.value = !isModalActive.value
 }
 defineProps<{
@@ -12,12 +12,12 @@ defineProps<{
 </script>
 
 <template>
-  <div class="modal" :class="{'is-active':isModalActive}">
+  <div class="modal" :class="{ 'is-active': isModalActive }">
     <div class="modal-background"></div>
     <div class="modal-content">
       <div class="box">
         {{ title }}
-      {{ msg }}
+        {{ msg }}
       </div>
     </div>
     <button class="modal-close is-large" aria-label="close" @click="toggleModal"></button>
