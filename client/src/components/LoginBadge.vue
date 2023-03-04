@@ -7,31 +7,28 @@ const session = useSession()
 
 <template>
   <div class="navbar-item" v-if="session.user">
-    <div class="field is-grouped">
-      <p class="control">
-        <button class="button is-dark">Hello, {{ session.user.name }}</button>
-      </p>
-      <p class="control">
-        <button class="button button-tw-button" @click="logout">Logout</button>
-      </p>
+    <div class="field is-grouped is-grouped-centered">
+      <div class="button is-black">
+        <span class="image">
+          <img class="is-rounded" :src="session.user.photo" alt="pic" />
+        </span>
+        <span> Hello, {{ session.user.name }} </span>
+      </div>
+      <button class="button button-tw-button" @click="logout">Logout</button>
     </div>
   </div>
 
   <div class="navbar-item" v-else>
-    <div class="field is-grouped">
-      <p class="control">
-        <RouterLink to="/login" class="bd-tw-button button">
-          <span class="icon">
-            <i class="fas fa-user-plus"></i>
-          </span>
-          <span>Login</span>
-        </RouterLink>
-      </p>
-      <p class="control">
-        <RouterLink to="/login" class="bd-tw-button button">
-          <span>Sign up</span>
-        </RouterLink>
-      </p>
+    <div class="buttons">
+      <RouterLink to="/login" class="bd-tw-button button">
+        <span class="icon">
+          <i class="fas fa-user-plus"></i>
+        </span>
+        <span>Login</span>
+      </RouterLink>
+      <RouterLink to="/login" class="bd-tw-button button">
+        <span>Sign up</span>
+      </RouterLink>
     </div>
   </div>
 </template>

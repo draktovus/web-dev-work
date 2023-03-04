@@ -1,15 +1,8 @@
 <script setup lang="ts">
 import { RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue'
-import { reactive } from 'vue'
 //import axios from 'axios'
-import HelloWorld from './components/HelloWorld.vue'
 import TheFooter from './components/TheFooter.vue'
-
-const data = reactive({
-  msg: '',
-  title: ''
-})
 
 /*async function apiRequest(){
   try {
@@ -26,7 +19,6 @@ apiRequest()
 
 <template>
   <NavBar />
-  <HelloWorld :title="data.title" :msg="data.msg"></HelloWorld>
   <div class="container mt-2">
     <RouterView />
   </div>
