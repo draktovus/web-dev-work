@@ -1,19 +1,8 @@
 import { reactive } from 'vue'
+import { getUsers } from './users'
 
 // acts as db for now
-const users: [UserDB] = [
-  {
-    name: 'manuelnreyes',
-    firstName: 'Manuel',
-    lastName: 'Reyes',
-    password: 'wasd123',
-    handle: '@TheManuelReyes',
-    isAdmin: true,
-    emails: ['manuel@google.com'],
-    photo:
-      'https://media.comicbook.com/2019/05/gintama-gintoki-1172688.jpeg?auto=webp&width=1200&height=628&crop=1200:628,smart'
-  }
-]
+const users = getUsers()
 
 interface User {
   name: string
@@ -21,14 +10,10 @@ interface User {
   lastName: string
   handle: string
   isAdmin: boolean
-  emails: [string]
+  emails: Array<string>
   photo?: string
-  id?: string
+  id?: number
   token?: string
-}
-
-interface UserDB extends User {
-  password: string
 }
 
 const session = reactive({
