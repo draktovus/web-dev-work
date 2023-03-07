@@ -1,6 +1,9 @@
 <script setup lang="ts">
 import { reactive } from 'vue';
-import type { WorkoutForm } from '@/types/types'
+import type { Workout } from '@/models/workouts'
+import { useSession } from '@/models/session';
+
+const session = useSession()
 
 defineProps<{
     isModalActive:boolean
@@ -8,13 +11,16 @@ defineProps<{
  
 const formInfo = reactive({
     form: {
+        userID: session.user?.id,
+        content: "",
         title: "",
         date: "",
         duration: "",
+        distance: "",
         location: "",
         picture: "",
         type: ""
-    } as WorkoutForm
+    } as Workout
 })
 </script>
 
@@ -34,11 +40,25 @@ const formInfo = reactive({
                 <input type="text" class="input" v-model="formInfo.form.title">
             </div>
         </div>
+        <!-- Content -->
+        <div class="field">
+            <label class="label">Content</label>
+            <div class="control">
+                <input type="text" class="input" v-model="formInfo.form.content">
+            </div>
+        </div>
         <!-- Date -->
         <div class="field">
             <label class="label">Date</label>
             <div class="control">
                 <input type="date" class="input" v-model="formInfo.form.date">
+            </div>
+        </div>
+        <!-- Distance -->
+        <div class="field">
+            <label class="label">Distance</label>
+            <div class="control">
+                <input type="text" class="input" v-model="formInfo.form.distance">
             </div>
         </div>
         <!-- Duration -->
@@ -80,7 +100,7 @@ const formInfo = reactive({
       </section>
       <footer class="modal-card-foot">
         <button class="button is-success" @click="$emit('submit', formInfo.form)">Save changes</button>
-        <button class="button">Cancel</button>
+        <button class="button" @click="$emit('toggle','add')" aria-label="close">Cancel</button>
       </footer>
     </div>
   </div>

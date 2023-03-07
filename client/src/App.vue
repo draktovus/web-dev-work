@@ -19,7 +19,7 @@ apiRequest()
 
 <template>
   <NavBar />
-  <div class="container mt-2">
+  <div class="container mt-5">
     <RouterView />
   </div>
   <TheFooter />

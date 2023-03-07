@@ -42,8 +42,8 @@ const users = useDB()
     </thead>
     <tfoot></tfoot>
     <tbody>
-      <tr>
-        <template v-for="user in users" :key="user.id">
+      <template v-for="user in users" :key="user.id">
+        <tr>
           <td>
             <figure class="image is-square">
               <img class="is-rounded" :src="user.photo" alt="" />
@@ -70,8 +70,8 @@ const users = useDB()
               </button>
             </div>
           </td>
-        </template>
-      </tr>
+        </tr>
+      </template>
     </tbody>
   </table>
 </template>

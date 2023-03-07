@@ -3,10 +3,11 @@ import { useSession } from '@/models/session'
 import WorkoutMedia from '@/components/WorkoutMedia.vue'
 import AddWorkoutModal from '@/components/AddWorkoutModal.vue';
 import DeleteWorkout from '@/components/DeleteWorkoutModal.vue';
-import type { WorkoutForm } from '@/types/types';
+import type  { Workout } from '@/models/workouts';
 import { reactive } from 'vue';
-
+import { useWorkouts } from '@/models/workouts';
 const session = useSession()
+const workouts = useWorkouts()
 const modalBooleans = reactive({
   isAddWorkoutModalActive:false as boolean,
   isDeleteWorkoutModalActive:false as boolean,
@@ -20,8 +21,9 @@ function toggle(modal:string){
   }
 }
 
-function submit(form:WorkoutForm){
+function submit(form:Workout){
   console.log({form})
+  workouts.push(form)
 }
 </script>
 
@@ -36,17 +38,35 @@ function submit(form:WorkoutForm){
       </div>
     </div>
     <div class="column is-half">
-      <WorkoutMedia>
-        <template v-slot:name> Manuel Reyes </template>
-        <template #handle> @TheManuelReyes </template>
-        <template #picture>
-          <img
-            src="https://www.usnews.com/dims4/USNEWS/f5b7039/17177859217/resize/800x540%3E/quality/85/?url=https%3A%2F%2Fmedia.beam.usnews.com%2F0d%2Fe8642fe073041e9345dd1b9d7807a5%2Fcollege-photo_14230.jpg"
-          />
-        </template>
-        <template #distance> 1.0 miles </template>
-        <template #duration> 10:00 s </template>
-      </WorkoutMedia>
+      <template v-for="workout in workouts" :key="workout.userID">
+        <WorkoutMedia v-if="workout.userID==session.user.id">
+          <template #profilepic>
+            <img class="is-rounded" :src="session.user.photo" />
+          </template>
+          <template v-slot:name>
+            {{session.user.firstName + " " + session.user.lastName}}
+          </template>
+          <template #handle>
+            {{session.user.handle}}
+          </template>
+          <template #title>
+            {{workout.title}}
+          </template>
+          <template #content>
+            {{workout.content}}
+          </template>
+          <template #date>
+            {{workout.date}}
+          </template>
+          <template #picture>
+            <img
+              :src="workout.picture"
+            />
+          </template>
+          <template #distance>{{ workout.distance }}</template>
+          <template #duration> {{ workout.duration }} </template>
+        </WorkoutMedia>
+      </template>
     </div>
     <div class="column"></div>
   </div>

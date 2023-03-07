@@ -4,20 +4,28 @@
   <article class="media box">
     <figure class="media-left">
       <p class="image is-64x64">
-        <img
+        <slot name="profilepic" msg="https://bulma.io/images/placeholders/128x128.png">
+          <img
           class="is-rounded"
-          src="https://bulma.io/images/placeholders/128x128.png"
+          src="{msg}"
           alt="placeholder image"
         />
+        </slot>
+        
       </p>
     </figure>
     <div class="media-content">
       <div class="content">
-        <strong><slot name="name">John Smith</slot></strong>
-        <small><slot name="handle">@SomeonesHandle</slot></small> <small>31m</small>
+        <strong class="mr-2"><slot name="name">John Smith</slot></strong>
+        <small class="mr-2"><slot name="handle">@SomeonesHandle</slot></small>
+        <small>
+          <slot name="date">01-01-2023</slot>
+        </small>
         <br />
-        Took a walk around campus!
-        <br />
+        <h6 class="mt-2"><slot name="title">On the Run</slot></h6>
+        <p>
+          <slot name="content">Took a walk around somewhere.</slot>
+        </p>
         <div class="columns">
           <div class="column">
             <figure class="image is-16by9">
