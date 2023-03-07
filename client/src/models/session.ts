@@ -1,8 +1,8 @@
 import { reactive } from 'vue'
-import { getUsers } from './users'
+import { useUsers } from './users'
 
 // acts as db for now
-const users = getUsers()
+const users = useUsers()
 
 interface User {
   name: string

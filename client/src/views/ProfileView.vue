@@ -43,7 +43,7 @@ function submit(form: Workout) {
         <DeleteWorkout @toggle="toggle" :isModalActive="modalBooleans.isDeleteWorkoutModalActive" />
       </div>
     </div>
-    <div class="column is-half">
+    <div class="column is-half is-flex is-flex-direction-column-reverse">
       <template v-for="workout in workouts" :key="workout.userID">
         <WorkoutMedia v-if="workout.userID == session.user.id">
           <template #profilepic>
