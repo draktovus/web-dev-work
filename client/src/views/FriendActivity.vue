@@ -1,13 +1,7 @@
-<script setup lang="ts">
-
-</script>
+<script setup lang="ts"></script>
 
 <template>
-    <div>
-        placeholder for friend activity
-    </div>
+  <div>placeholder for friend activity</div>
 </template>
 
-<style scoped>
-
-</style>
+<style scoped></style>

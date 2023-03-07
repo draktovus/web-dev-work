@@ -13,15 +13,15 @@ import workouts from '@/data/workouts.json'
     }
 */
 export interface Workout {
-    userID: number,
-    title: string,
-    content: string,
-    picture: string,
-    distance: string,
-    duration: string,
-    location: string,
-    date: string,
-    type: string
+  userID: number
+  title: string
+  content: string
+  picture: string
+  distance: string
+  duration: string
+  location: string
+  date: string
+  type: string
 }
 
 export function useWorkouts(): Workout[] {

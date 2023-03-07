@@ -43,7 +43,7 @@ function tryLogin() {
             </span>
           </div>
         </div>
-  
+
         <div class="field">
           <label for="" class="label">Password</label>
           <div class="control has-icons-left">
@@ -60,7 +60,7 @@ function tryLogin() {
             </span>
           </div>
         </div>
-  
+
         <div class="field is-grouped">
           <p class="control">
             <button class="button is-success" @click="tryLogin">Login</button>
@@ -70,7 +70,6 @@ function tryLogin() {
           </p>
         </div>
       </div>
-      
     </div>
   </div>
 </template>

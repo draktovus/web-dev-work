@@ -5,13 +5,8 @@
     <figure class="media-left">
       <p class="image is-64x64">
         <slot name="profilepic" msg="https://bulma.io/images/placeholders/128x128.png">
-          <img
-          class="is-rounded"
-          src="{msg}"
-          alt="placeholder image"
-        />
+          <img class="is-rounded" src="{msg}" alt="placeholder image" />
         </slot>
-        
       </p>
     </figure>
     <div class="media-content">

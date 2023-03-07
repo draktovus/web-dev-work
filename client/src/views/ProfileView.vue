@@ -1,28 +1,28 @@
 <script setup lang="ts">
 import { useSession } from '@/models/session'
 import WorkoutMedia from '@/components/WorkoutMedia.vue'
-import AddWorkoutModal from '@/components/AddWorkoutModal.vue';
-import DeleteWorkout from '@/components/DeleteWorkoutModal.vue';
-import type  { Workout } from '@/models/workouts';
-import { reactive } from 'vue';
-import { useWorkouts } from '@/models/workouts';
+import AddWorkoutModal from '@/components/AddWorkoutModal.vue'
+import DeleteWorkout from '@/components/DeleteWorkoutModal.vue'
+import type { Workout } from '@/models/workouts'
+import { reactive } from 'vue'
+import { useWorkouts } from '@/models/workouts'
 const session = useSession()
 const workouts = useWorkouts()
 const modalBooleans = reactive({
-  isAddWorkoutModalActive:false as boolean,
-  isDeleteWorkoutModalActive:false as boolean,
+  isAddWorkoutModalActive: false as boolean,
+  isDeleteWorkoutModalActive: false as boolean
 })
 
-function toggle(modal:string){
-  if (modal=="add"){
-    modalBooleans.isAddWorkoutModalActive=!modalBooleans.isAddWorkoutModalActive
-  }else{
-    modalBooleans.isDeleteWorkoutModalActive=!modalBooleans.isDeleteWorkoutModalActive
+function toggle(modal: string) {
+  if (modal == 'add') {
+    modalBooleans.isAddWorkoutModalActive = !modalBooleans.isAddWorkoutModalActive
+  } else {
+    modalBooleans.isDeleteWorkoutModalActive = !modalBooleans.isDeleteWorkoutModalActive
   }
 }
 
-function submit(form:Workout){
-  console.log({form})
+function submit(form: Workout) {
+  console.log({ form })
   workouts.push(form)
 }
 </script>
@@ -32,36 +32,40 @@ function submit(form:Workout){
     <div class="column">
       <div class="buttons">
         <button class="button is-info is-fullwidth" @click="toggle('add')">Add Workout</button>
-        <AddWorkoutModal @toggle="toggle" :isModalActive="modalBooleans.isAddWorkoutModalActive" @submit="submit"/>
-        <button class="button is-danger is-fullwidth" @click="toggle('delete')">Delete Workout</button>
+        <AddWorkoutModal
+          @toggle="toggle"
+          :isModalActive="modalBooleans.isAddWorkoutModalActive"
+          @submit="submit"
+        />
+        <button class="button is-danger is-fullwidth" @click="toggle('delete')">
+          Delete Workout
+        </button>
         <DeleteWorkout @toggle="toggle" :isModalActive="modalBooleans.isDeleteWorkoutModalActive" />
       </div>
     </div>
     <div class="column is-half">
       <template v-for="workout in workouts" :key="workout.userID">
-        <WorkoutMedia v-if="workout.userID==session.user.id">
+        <WorkoutMedia v-if="workout.userID == session.user.id">
           <template #profilepic>
             <img class="is-rounded" :src="session.user.photo" />
           </template>
           <template v-slot:name>
-            {{session.user.firstName + " " + session.user.lastName}}
+            {{ session.user.firstName + ' ' + session.user.lastName }}
           </template>
           <template #handle>
-            {{session.user.handle}}
+            {{ session.user.handle }}
           </template>
           <template #title>
-            {{workout.title}}
+            {{ workout.title }}
           </template>
           <template #content>
-            {{workout.content}}
+            {{ workout.content }}
           </template>
           <template #date>
-            {{workout.date}}
+            {{ workout.date }}
           </template>
           <template #picture>
-            <img
-              :src="workout.picture"
-            />
+            <img :src="workout.picture" />
           </template>
           <template #distance>{{ workout.distance }}</template>
           <template #duration> {{ workout.duration }} </template>

@@ -1,9 +1,7 @@
 <script setup lang="ts">
-
 defineProps<{
   isModalActive?: boolean
 }>()
-
 </script>
 
 <template>
@@ -12,7 +10,7 @@ defineProps<{
     <div class="modal-card">
       <header class="modal-card-head">
         <p class="modal-card-title">Delete workout</p>
-        <button class="delete" @click="$emit('toggle','delete')" aria-label="close"></button>
+        <button class="delete" @click="$emit('toggle', 'delete')" aria-label="close"></button>
       </header>
       <section class="modal-card-body">
         <!-- Content ... -->

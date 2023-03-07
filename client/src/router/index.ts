@@ -54,7 +54,7 @@ const router = createRouter({
     {
       path: '/friends',
       name: 'friends',
-      component: FriendActivity,
+      component: FriendActivity
     }
   ]
 })

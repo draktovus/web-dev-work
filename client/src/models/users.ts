@@ -17,18 +17,18 @@ import users from '@/data/users.json'
     }
  */
 export interface UserDB {
-    [key:number]: number;
-    "id": number;
-    "name": string;
-    "firstName": string;
-    "lastName": string;
-    "password": string;
-    "handle": string;
-    "isAdmin": boolean;
-    "emails": Array<string>;
-    "photo": string;
-    "token": string;
+  [key: number]: number
+  id: number
+  name: string
+  firstName: string
+  lastName: string
+  password: string
+  handle: string
+  isAdmin: boolean
+  emails: Array<string>
+  photo: string
+  token: string
 }
-export function getUsers():UserDB[]{
-    return users.users;
+export function getUsers(): UserDB[] {
+  return users.users
 }
