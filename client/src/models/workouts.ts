@@ -1,10 +1,9 @@
 import {useWorkouts, type Workout} from '@/models/workout'
-import { computed, ref } from 'vue'
+import { computed, reactive, ref } from 'vue'
 import { useSession } from './session'
 
-const workouts = useWorkouts()
-
 const userWorkouts = ref([]as Workout[])
+export const workouts = reactive(useWorkouts())
 
 workouts.forEach((workout)=>{
   if (workout.userID == useSession().user?.id) {
@@ -12,4 +11,8 @@ workouts.forEach((workout)=>{
   }
 })
 
-export const todayStatsDistance = computed(() => userWorkouts.value.reduce((total, item) => total + Number(item.distance), 0));
+export function useUserWorkouts(){
+  return userWorkouts
+}
+
+export const todayStatsDistance = computed(() => userWorkouts.value.reduce((total, item) => total + item.distance, 0));

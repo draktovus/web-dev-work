@@ -11,8 +11,8 @@ interface User {
   handle: string
   isAdmin: boolean
   emails: Array<string>
-  photo?: string
-  id?: number
+  photo: string
+  id: number
   token?: string
 }
 

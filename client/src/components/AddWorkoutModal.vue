@@ -59,7 +59,7 @@ const formInfo = reactive({
         <div class="field">
           <label class="label">Distance</label>
           <div class="control">
-            <input type="text" class="input" v-model="formInfo.form.distance" />
+            <input type="number" class="input" v-model="formInfo.form.distance" />
           </div>
         </div>
         <!-- Duration -->
