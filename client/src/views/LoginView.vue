@@ -3,7 +3,11 @@ import Login from '../components/LoginItem.vue'
 </script>
 
 <template>
-  <Login />
+  <div class="columns is-centered">
+    <div class="column is-4">
+      <Login />
+    </div>
+  </div>
 </template>
 
 <style scoped></style>

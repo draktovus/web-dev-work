@@ -1,12 +1,12 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import type { Workout } from '@/models/workouts'
+import type { Workout } from '@/models/workout'
 import { useSession } from '@/models/session'
 
 const session = useSession()
 
 defineProps<{
-  isModalActive: boolean
+  isModalActive: boolean,
 }>()
 
 const formInfo = reactive({
@@ -16,7 +16,8 @@ const formInfo = reactive({
     title: '',
     date: '',
     duration: '',
-    distance: '',
+    distance: 0,
+    distanceUnit: '',
     location: '',
     picture: '',
     type: ''

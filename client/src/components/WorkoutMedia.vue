@@ -1,42 +1,45 @@
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import { getUserFromID } from '@/models/users';
+import type { Workout } from '@/models/workout'
+defineProps<{
+  workout: Workout,
+}>()
+
+</script>
 
 <template>
   <article class="media box">
     <figure class="media-left">
       <p class="image is-64x64">
-        <slot name="profilepic" msg="https://bulma.io/images/placeholders/128x128.png">
-          <img class="is-rounded" src="{msg}" alt="placeholder image" />
-        </slot>
+        <img class="is-rounded" :src="getUserFromID(workout.userID)?.photo" alt="placeholder image" />
       </p>
     </figure>
     <div class="media-content">
       <div class="content">
-        <strong class="mr-2"><slot name="name">John Smith</slot></strong>
-        <small class="mr-2"><slot name="handle">@SomeonesHandle</slot></small>
+        <strong class="mr-2">{{getUserFromID(workout.userID)?.firstName}}{{getUserFromID(workout.userID)?.lastName}}</strong>
+        <small class="mr-2">{{getUserFromID(workout.userID)?.handle}}</small>
         <small>
-          <slot name="date">01-01-2023</slot>
+          {{workout.date}}
         </small>
         <br />
-        <h6 class="mt-2"><slot name="title">On the Run</slot></h6>
+        <h6 class="mt-2">{{workout.title}}</h6>
         <p>
-          <slot name="content">Took a walk around somewhere.</slot>
+          {{workout.content}}
         </p>
         <div class="columns">
           <div class="column">
             <figure class="image is-16by9">
-              <slot name="picture">
                 <img
-                  src="https://bulma.io/images/placeholders/128x128.png"
+                  :src="workout.picture"
                   alt="placeholder image"
                 />
-              </slot>
             </figure>
             <div class="columns">
               <div class="column has-text-centered">
-                <h1 class="title is-size-5"><slot name="distance">100 miles</slot></h1>
+                <h1 class="title is-size-5">{{ workout.distance }} {{workout.distanceUnit }}</h1>
               </div>
               <div class="column has-text-centered">
-                <h1 class="title is-size-5"><slot name="duration">duration</slot></h1>
+                <h1 class="title is-size-5">{{ workout.duration }}</h1>
               </div>
             </div>
           </div>

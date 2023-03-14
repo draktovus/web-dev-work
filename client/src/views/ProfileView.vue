@@ -3,9 +3,9 @@ import { useSession } from '@/models/session'
 import WorkoutMedia from '@/components/WorkoutMedia.vue'
 import AddWorkoutModal from '@/components/AddWorkoutModal.vue'
 import DeleteWorkout from '@/components/DeleteWorkoutModal.vue'
-import type { Workout } from '@/models/workouts'
+import type { Workout } from '@/models/workout'
 import { reactive } from 'vue'
-import { useWorkouts } from '@/models/workouts'
+import { useWorkouts } from '@/models/workout'
 const session = useSession()
 const workouts = useWorkouts()
 const modalBooleans = reactive({
@@ -45,31 +45,7 @@ function submit(form: Workout) {
     </div>
     <div class="column is-half is-flex is-flex-direction-column-reverse">
       <template v-for="workout in workouts" :key="workout.userID">
-        <WorkoutMedia v-if="workout.userID == session.user.id">
-          <template #profilepic>
-            <img class="is-rounded" :src="session.user.photo" />
-          </template>
-          <template v-slot:name>
-            {{ session.user.firstName + ' ' + session.user.lastName }}
-          </template>
-          <template #handle>
-            {{ session.user.handle }}
-          </template>
-          <template #title>
-            {{ workout.title }}
-          </template>
-          <template #content>
-            {{ workout.content }}
-          </template>
-          <template #date>
-            {{ workout.date }}
-          </template>
-          <template #picture>
-            <img :src="workout.picture" />
-          </template>
-          <template #distance>{{ workout.distance }}</template>
-          <template #duration> {{ workout.duration }} </template>
-        </WorkoutMedia>
+        <WorkoutMedia v-if="workout.userID == session.user.id" :workout="workout" />
       </template>
     </div>
     <div class="column"></div>
