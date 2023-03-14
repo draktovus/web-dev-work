@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useSession } from '@/models/session'
-import BasicStatistics from '../components/BasicStatistics.vue';
+import BasicStatistics from '../components/BasicStatistics.vue'
 
 const session = useSession()
 </script>
@@ -17,8 +17,8 @@ const session = useSession()
       </div>
       <div class="content" v-else>
         <p>
-          Welcome, {{ session.user.name }}! You are logged in. Here is a some statistics on your workouts.
-          
+          Welcome, {{ session.user.name }}! You are logged in. Here is a some statistics on your
+          workouts.
         </p>
         <BasicStatistics />
       </div>

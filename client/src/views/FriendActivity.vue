@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import WorkoutMedia from '@/components/WorkoutMedia.vue';
-import { workouts } from '@/models/workouts';
+import WorkoutMedia from '@/components/WorkoutMedia.vue'
+import { workouts } from '@/models/workouts'
 
 const allWorkouts = workouts
 </script>

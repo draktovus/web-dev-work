@@ -34,9 +34,9 @@ export function useUsers(): UserDB[] {
   return users.users
 }
 
-export function getUserFromID(id:number): UserDB|null{
-  for (let i = 0; i < users.users.length; i++ ){
-    if (users.users[i].id === id){
+export function getUserFromID(id: number): UserDB | null {
+  for (let i = 0; i < users.users.length; i++) {
+    if (users.users[i].id === id) {
       return users.users[i]
     }
   }

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import { todayStatsDistance } from '@/models/workouts';
+import { todayStatsDistance } from '@/models/workouts'
 const data = reactive({
   today: {
     name: 'Today',

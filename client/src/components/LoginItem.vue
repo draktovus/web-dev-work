@@ -28,20 +28,12 @@ function tryLogin() {
     <div class="field">
       <label for="" class="label">Username</label>
       <div class="control has-icons-left">
-        <input
-          class="input"
-          type="text"
-          name=""
-          id=""
-          placeholder="Username"
-          v-model="user.name"
-        />
+        <input class="input" type="text" name="" id="" placeholder="Username" v-model="user.name" />
         <span class="icon is-small is-left">
           <i class="fas fa-user"></i>
         </span>
       </div>
     </div>
-
     <div class="field">
       <label for="" class="label">Password</label>
       <div class="control has-icons-left">
@@ -68,5 +60,4 @@ function tryLogin() {
       </p>
     </div>
   </div>
-  
 </template>

@@ -57,7 +57,7 @@ const router = createRouter({
       name: 'friends',
       component: FriendActivity,
       beforeEnter: secureRoute
-    },
+    }
   ]
 })
 

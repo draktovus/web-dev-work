@@ -4,7 +4,7 @@ import WorkoutMedia from '@/components/WorkoutMedia.vue'
 import AddWorkoutModal from '@/components/AddWorkoutModal.vue'
 import DeleteWorkout from '@/components/DeleteWorkoutModal.vue'
 import type { Workout } from '@/models/workout'
-import { reactive,unref } from 'vue'
+import { reactive, unref } from 'vue'
 import { useUserWorkouts, workouts } from '@/models/workouts'
 
 const session = useSession()
@@ -22,7 +22,7 @@ function toggle(modal: string) {
 }
 
 function submit(form: Workout) {
-  if (form.picture == ''){
+  if (form.picture == '') {
     form.picture = 'https://bulma.io/images/placeholders/600x480.png'
   }
   /**
@@ -49,8 +49,8 @@ function submit(form: Workout) {
     date: form.date,
     type: form.type,
     location: form.location
-    }
- 
+  }
+
   const uWorkouts = useUserWorkouts()
   uWorkouts.value.push(unref(item))
   workouts.push(unref(item))

@@ -1,42 +1,45 @@
 <script setup lang="ts">
-import { getUserFromID } from '@/models/users';
+import { getUserFromID } from '@/models/users'
 import type { Workout } from '@/models/workout'
 defineProps<{
-  workout: Workout,
+  workout: Workout
 }>()
-
 </script>
 
 <template>
   <article class="media box">
     <figure class="media-left">
       <p class="image is-64x64">
-        <img class="is-rounded" :src="getUserFromID(workout.userID)?.photo" alt="placeholder image" />
+        <img
+          class="is-rounded"
+          :src="getUserFromID(workout.userID)?.photo"
+          alt="placeholder image"
+        />
       </p>
     </figure>
     <div class="media-content">
       <div class="content">
-        <strong class="mr-2">{{getUserFromID(workout.userID)?.firstName}}{{getUserFromID(workout.userID)?.lastName}}</strong>
-        <small class="mr-2">{{getUserFromID(workout.userID)?.handle}}</small>
+        <strong class="mr-2"
+          >{{ getUserFromID(workout.userID)?.firstName
+          }}{{ getUserFromID(workout.userID)?.lastName }}</strong
+        >
+        <small class="mr-2">{{ getUserFromID(workout.userID)?.handle }}</small>
         <small>
-          {{workout.date}}
+          {{ workout.date }}
         </small>
         <br />
-        <h6 class="mt-2">{{workout.title}}</h6>
+        <h6 class="mt-2">{{ workout.title }}</h6>
         <p>
-          {{workout.content}}
+          {{ workout.content }}
         </p>
         <div class="columns">
           <div class="column">
             <figure class="image is-16by9">
-                <img
-                  :src="workout.picture"
-                  alt="placeholder image"
-                />
+              <img :src="workout.picture" alt="placeholder image" />
             </figure>
             <div class="columns">
               <div class="column has-text-centered">
-                <h1 class="title is-size-5">{{ workout.distance }} {{workout.distanceUnit }}</h1>
+                <h1 class="title is-size-5">{{ workout.distance }} {{ workout.distanceUnit }}</h1>
               </div>
               <div class="column has-text-centered">
                 <h1 class="title is-size-5">{{ workout.duration }}</h1>
