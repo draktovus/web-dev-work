@@ -13,7 +13,7 @@ function toggleMenu() {
 </script>
 
 <template>
-  <nav class="navbar is-black">
+  <nav class="navbar is-dark">
     <div class="container">
       <div class="navbar-brand">
         <RouterLink class="navbar-item" to="/">

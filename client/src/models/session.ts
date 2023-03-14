@@ -1,5 +1,7 @@
 import { reactive } from 'vue'
 import { useUsers } from './users'
+import { useUserWorkouts } from './workouts'
+import { useWorkouts } from './workout'
 
 // acts as db for now
 const users = useUsers()
@@ -41,6 +43,13 @@ export function login(username: string | null, password: string | null) {
           isAdmin: element.isAdmin
         }
         console.log('Logged in!')
+        const userWorkouts = useUserWorkouts()
+        const workouts = useWorkouts()
+        workouts.forEach((workout) => {
+          if (workout.userID == useSession().user?.id) {
+            userWorkouts.value.push(workout)
+          }
+        })
         break
       }
     }
@@ -49,6 +58,10 @@ export function login(username: string | null, password: string | null) {
 
 export function logout() {
   session.user = null
+  const userWorkouts = useUserWorkouts()
+  // one way to clear an array
+  // https://stackoverflow.com/questions/1232040/how-do-i-empty-an-array-in-javascript
+  userWorkouts.value.length = 0
 }
 
 export function useDB() {

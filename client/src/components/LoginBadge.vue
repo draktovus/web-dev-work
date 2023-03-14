@@ -8,7 +8,7 @@ const session = useSession()
 <template>
   <div class="navbar-item" v-if="session.user">
     <div class="field is-grouped is-grouped-centered">
-      <div class="button is-black">
+      <div class="button is-dark">
         <span class="image">
           <img class="is-rounded" :src="session.user.photo" alt="pic" />
         </span>
