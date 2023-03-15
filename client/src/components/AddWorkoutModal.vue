@@ -15,7 +15,8 @@ const formInfo = reactive({
     content: '',
     title: '',
     date: '',
-    duration: '',
+    duration: 0,
+    durationUnit: 'minutes',
     distance: 0,
     distanceUnit: 'Miles',
     location: '',
@@ -102,9 +103,20 @@ const formInfo = reactive({
             <label class="label">Duration</label>
           </div>
           <div class="field-body">
-            <div class="field">
+            <div class="field is-expanded">
               <div class="control">
-                <input type="text" class="input" v-model="formInfo.form.duration" />
+                <input type="number" class="input" v-model="formInfo.form.duration" />
+              </div>
+            </div>
+            <div class="field">
+              <div class="control is-expanded">
+                <div class="select is-fullwidth">
+                  <select v-model="formInfo.form.durationUnit">
+                    <option value="hours">Hours</option>
+                    <option value="minutes">Minutes</option>
+                    <option value="seconds">Seconds</option>
+                  </select>
+                </div>
               </div>
             </div>
           </div>

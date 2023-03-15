@@ -42,7 +42,7 @@ defineProps<{
                 <h1 class="title is-size-5">{{ workout.distance }} {{ workout.distanceUnit }}</h1>
               </div>
               <div class="column has-text-centered">
-                <h1 class="title is-size-5">{{ workout.duration }}</h1>
+                <h1 class="title is-size-5">{{ workout.duration }} {{ workout.durationUnit }}</h1>
               </div>
             </div>
           </div>
