@@ -1,29 +1,6 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
-import { todayStatsDistance } from '@/models/workouts'
-const data = reactive({
-  today: {
-    name: 'Today',
-    distance: 0.0,
-    duration: 0.0,
-    pace: '-',
-    calories: 0.0
-  },
-  week: {
-    name: 'Week',
-    distance: 0.0,
-    duration: 0.0,
-    pace: '-',
-    calories: 0.0
-  },
-  allTime: {
-    name: 'All Time',
-    distance: 0.0,
-    duration: 0.0,
-    pace: '-',
-    calories: 0.0
-  }
-})
+import {  useStats } from '@/models/workouts'
+const data = useStats()
 </script>
 
 <template>
@@ -32,11 +9,11 @@ const data = reactive({
       <div class="box"></div>
     </div>
     <div class="column is-half">
-      <div v-for="item in data" class="box" :key="item.name">
-        <h1 class="title is-4 has-text-centered">{{ item.name }}</h1>
+      <div v-for="item,index in data" class="box" :key="item.distance">
+        <h1 class="title is-4 has-text-centered">{{ index }}</h1>
         <div class="columns is-multiline">
           <div class="column is-half">
-            <h2 class="title has-text-centered">{{ todayStatsDistance }}</h2>
+            <h2 class="title has-text-centered">{{ item.distance }}</h2>
             <h2 class="subtitle has-text-centered">Distance</h2>
           </div>
           <div class="column is-half">
