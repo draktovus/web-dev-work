@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { measurementSystem, displayDistanceOfWorkout, getDistanceUnit } from '@/models/measurement'
+import { displayDistanceOfWorkout, getDistanceUnit } from '@/models/measurement'
 import { getUserFromID } from '@/models/users'
 import type { Workout } from '@/models/workout'
 import { ref } from 'vue'
