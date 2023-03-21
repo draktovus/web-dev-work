@@ -1,4 +1,5 @@
 import { ref } from 'vue'
+import type { Workout } from './workout'
 
 export const measurementSystem = ref('imperial')
 
@@ -33,4 +34,17 @@ export function convertImperialToMetric(number: number) {
 // Convert kilometers to miles
 export function convertMetricToImperial(number: number) {
   return number * 0.621371
+}
+
+export function displayDistanceOfWorkout(workout: Workout) {
+  if (
+    (workout.distanceUnit == 'miles' && measurementSystem.value == 'imperial') ||
+    (workout.distanceUnit == 'kilometers' && measurementSystem.value == 'metric')
+  ) {
+    return workout.distance
+  } else if (workout.distanceUnit == 'miles' && measurementSystem.value == 'metric') {
+    return convertImperialToMetric(workout.distance)
+  } else {
+    return convertMetricToImperial(workout.distance)
+  }
 }

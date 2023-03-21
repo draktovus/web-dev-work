@@ -89,8 +89,8 @@ const formInfo = reactive({
               <div class="control is-expanded">
                 <div class="select is-fullwidth">
                   <select v-model="formInfo.form.distanceUnit">
-                    <option value="Miles">Miles</option>
-                    <option value="Kilometers">Kilometers</option>
+                    <option value="miles">Miles</option>
+                    <option value="kilometers">Kilometers</option>
                   </select>
                 </div>
               </div>
@@ -157,11 +157,11 @@ const formInfo = reactive({
               <div class="control">
                 <div class="select">
                   <select v-model="formInfo.form.type">
-                    <option value="Run">Run</option>
-                    <option value="Walk">Walk</option>
-                    <option value="Bike">Bike</option>
-                    <option value="Cardio">Cardio</option>
-                    <option value="Strength">Strength</option>
+                    <option value="run">Run</option>
+                    <option value="walk">Walk</option>
+                    <option value="bike">Bike</option>
+                    <option value="cardio">Cardio</option>
+                    <option value="strength">Strength</option>
                   </select>
                 </div>
               </div>

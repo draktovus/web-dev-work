@@ -1,9 +1,12 @@
 <script setup lang="ts">
+import { measurementSystem, displayDistanceOfWorkout, getDistanceUnit } from '@/models/measurement'
 import { getUserFromID } from '@/models/users'
 import type { Workout } from '@/models/workout'
+import { ref } from 'vue'
 defineProps<{
   workout: Workout
 }>()
+const distance = ref(0)
 </script>
 
 <template>
@@ -39,7 +42,9 @@ defineProps<{
             </figure>
             <div class="columns">
               <div class="column has-text-centered">
-                <h1 class="title is-size-5">{{ workout.distance }} {{ workout.distanceUnit }}</h1>
+                <h1 class="title is-size-5">
+                  {{ displayDistanceOfWorkout(workout) }} {{ getDistanceUnit() }}
+                </h1>
               </div>
               <div class="column has-text-centered">
                 <h1 class="title is-size-5">{{ workout.duration }} {{ workout.durationUnit }}</h1>

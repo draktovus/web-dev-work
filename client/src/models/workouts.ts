@@ -1,7 +1,10 @@
 import { useWorkouts, type Workout } from '@/models/workout'
 import { computed, reactive, ref } from 'vue'
+import { convertMetricToImperial, convertImperialToMetric, measurementSystem } from './measurement'
 
 const userWorkouts = ref([] as Workout[])
+
+//any changes can be listened to and added to view
 export const workouts = reactive(useWorkouts())
 
 export function useUserWorkouts() {
@@ -25,9 +28,20 @@ const METS = {
   strength: 9.0
 }
 const weight = 81
-const AllTimeStatsDistance = computed(() =>
-  userWorkouts.value.reduce((totalDistance, item) => totalDistance + item.distance, 0)
-)
+const AllTimeStatsDistance = computed(() => {
+  const distanceImperial = userWorkouts.value.reduce((totalDistance, item) => {
+    if (item.distanceUnit == 'miles') {
+      return totalDistance + item.distance
+    } else {
+      return totalDistance + convertMetricToImperial(item.distance)
+    }
+  }, 0)
+  if (measurementSystem.value == 'imperial') {
+    return distanceImperial.toFixed(2)
+  } else {
+    return convertImperialToMetric(distanceImperial).toFixed(2)
+  }
+})
 
 const AllTimeStatsDuration = computed(() => {
   let [seconds, minutes, hours] = [0, 0, 0]
@@ -42,10 +56,18 @@ const AllTimeStatsDuration = computed(() => {
     }
   })
 
-  hours += Math.floor(seconds / 3600)
-  seconds -= Math.floor(seconds / 3600) * 3600
-  minutes += Math.floor(seconds / 60)
-  seconds -= Math.floor(seconds / 60) * 60
+  //Convert minutes into hours
+  if (minutes > 0) {
+    hours += Math.floor(minutes / 60)
+    minutes = minutes % 60
+  }
+  if (seconds > 0) {
+    // Convert excess seconds into appropriate hours/minutes
+    hours += Math.floor(seconds / 3600)
+    seconds = seconds % 3600
+    minutes += Math.floor(seconds / 60)
+    seconds = seconds % 60
+  }
 
   return (
     `${hours < 10 ? `0${hours}` : hours.toString()}:` +
@@ -57,19 +79,21 @@ const AllTimeStatsPace = computed(() =>
   userWorkouts.value.reduce((total, item) => total + item.duration, 0).toFixed(2)
 )
 const AllTimeStatsCalories = computed(() =>
-  userWorkouts.value.reduce((total, workout) => {
-    if (workout.type == 'Run') {
-      return total + ((METS.running * 3.5 * weight) / 200) * workout.duration
-    } else if (workout.type == 'Walk') {
-      return total + ((METS.walking * 3.5 * weight) / 200) * workout.duration
-    } else if (workout.type == 'Bike') {
-      return total + ((METS.biking * 3.5 * weight) / 200) * workout.duration
-    } else if (workout.type == 'Cardio') {
-      return total + ((METS.cardio * 3.5 * weight) / 200) * workout.duration
-    } else {
-      return total + ((METS.strength * 3.5 * weight) / 200) * workout.duration
-    }
-  }, 0)
+  userWorkouts.value
+    .reduce((total, workout) => {
+      if (workout.type == 'run') {
+        return total + ((METS.running * 3.5 * weight) / 200) * workout.duration
+      } else if (workout.type == 'walk') {
+        return total + ((METS.walking * 3.5 * weight) / 200) * workout.duration
+      } else if (workout.type == 'bike') {
+        return total + ((METS.biking * 3.5 * weight) / 200) * workout.duration
+      } else if (workout.type == 'cardio') {
+        return total + ((METS.cardio * 3.5 * weight) / 200) * workout.duration
+      } else {
+        return total + ((METS.strength * 3.5 * weight) / 200) * workout.duration
+      }
+    }, 0)
+    .toFixed(2)
 )
 const stats = reactive({
   Today: {
