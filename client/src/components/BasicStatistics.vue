@@ -7,7 +7,13 @@ const data = useStats()
 <template>
   <div class="columns">
     <div class="column is-one-quarter">
-      <div class="box"></div>
+      <div class="box is-primary is-outlined">
+        <h1 class="title is-4">Biometrics</h1>
+        <p class="content">Height: 160 cm</p>
+        <p class="content">Weight: 82 kg</p>
+        <p class="content">Age: 21</p>
+        <p class="content">Sex: Male</p>
+      </div>
     </div>
     <div class="column is-half">
       <div v-for="(item, index) in data" class="box" :key="item.distance">

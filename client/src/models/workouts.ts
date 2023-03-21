@@ -42,6 +42,11 @@ const AllTimeStatsDuration = computed(() => {
     }
   })
 
+  hours += Math.floor(seconds / 3600)
+  seconds -= Math.floor(seconds / 3600) * 3600
+  minutes += Math.floor(seconds / 60)
+  seconds -= Math.floor(seconds / 60) * 60
+
   return (
     `${hours < 10 ? `0${hours}` : hours.toString()}:` +
     `${minutes < 10 ? `0${minutes}` : minutes.toString()}:` +
