@@ -3,7 +3,7 @@ import { ref } from 'vue'
 import { RouterLink } from 'vue-router'
 import LoginBadge from './LoginBadge.vue'
 import { useSession } from '@/models/session'
-import MeasurementSystem from './MeasurementSystem.vue';
+import MeasurementSystem from './MeasurementSystem.vue'
 
 const session = useSession()
 

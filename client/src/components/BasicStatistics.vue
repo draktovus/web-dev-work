@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import {  useStats } from '@/models/workouts'
+import { getDistanceUnit, getPaceUnit } from '@/models/measurement'
+import { useStats } from '@/models/workouts'
 const data = useStats()
 </script>
 
@@ -9,11 +10,11 @@ const data = useStats()
       <div class="box"></div>
     </div>
     <div class="column is-half">
-      <div v-for="item,index in data" class="box" :key="item.distance">
+      <div v-for="(item, index) in data" class="box" :key="item.distance">
         <h1 class="title is-4 has-text-centered">{{ index }}</h1>
         <div class="columns is-multiline">
           <div class="column is-half">
-            <h2 class="title has-text-centered">{{ item.distance }}</h2>
+            <h2 class="title has-text-centered">{{ item.distance }} {{ getDistanceUnit() }}</h2>
             <h2 class="subtitle has-text-centered">Distance</h2>
           </div>
           <div class="column is-half">
@@ -21,7 +22,7 @@ const data = useStats()
             <h2 class="subtitle has-text-centered">Duration</h2>
           </div>
           <div class="column is-half">
-            <h2 class="title has-text-centered">{{ item.pace }}</h2>
+            <h2 class="title has-text-centered">{{ item.pace }} {{ getPaceUnit() }}</h2>
             <h2 class="subtitle has-text-centered">Avg Pace</h2>
           </div>
           <div class="column is-half">
