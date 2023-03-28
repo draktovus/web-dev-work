@@ -3,6 +3,8 @@ const http = require('http')
 const path = require('path')
 const express = require('express');
 const app = express();
+const users = require('./controllers/users')
+const workouts = require('./controllers/workouts')
 
 // 127.0.0.1 is the loopback address
 const hostname = '127.0.0.1';
@@ -13,11 +15,14 @@ app
     .use(express.json())
     .use(express.static(path.join(__dirname, '../client/dist')))
 
+
 // Actions
 app
     .get('/', (req, res) => {
         res.send("Exercise Mania")
     })
+    .use('/api/v1/users', users)
+    .use('/api/v1/workouts', workouts)
 
 // Catch all (called deep linking)
 app.get('*', (req,res) => {

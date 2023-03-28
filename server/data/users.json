@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "key": 1,
+      "id": 1,
+      "name": "manuelnreyes",
+      "firstName": "Manuel",
+      "lastName": "Reyes",
+      "password": "wasd123",
+      "handle": "@TheManuelReyes",
+      "isAdmin": true,
+      "emails": ["manuel@google.com"],
+      "photo": "https://media.comicbook.com/2019/05/gintama-gintoki-1172688.jpeg?auto=webp&width=1200&height=628&crop=1200:628,smart",
+      "token": "nothing"
+    },
+    {
+      "key": 2,
+      "id": 2,
+      "name": "juan",
+      "firstName": "Juan",
+      "lastName": "Perez",
+      "password": "wasd123",
+      "handle": "@juanperez",
+      "isAdmin": false,
+      "emails": ["juan@google.com"],
+      "photo": "data:image/jpeg;base64,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",
+      "token": "nothing"
+    }
+  ]
+}
