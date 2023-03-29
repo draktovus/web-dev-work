@@ -17,8 +17,8 @@ router
 
 .get('/:id', (req,res) => {
     const id = +req.params.id
-    const workout = model.getWorkoutByUserId(id);
-    res.send(workout)
+    const workouts = model.getWorkoutsByUserId(id);
+    res.send(workouts)
 })
 
 .post('/', (req,res) => {
@@ -28,13 +28,13 @@ router
     console.log(req.headers)
     console.log(req.body)
 
-    model.addUser(workout);
+    model.addWorkout(workout);
     res.send(workout);
 })
 
 .patch('/:id', (req,res) => {
     const workout = req.body;
-    model.updateUser(workout);
+    model.updateWorkout(workout);
     res.send(workout)
 })
 

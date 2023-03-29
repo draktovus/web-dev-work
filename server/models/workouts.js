@@ -6,8 +6,8 @@ function getWorkouts(){
     return data.workouts;
 }
 
-function getWorkoutByUserId(id){
-    return data.workouts.find((workout)=> workout.userID === id)
+function getWorkoutsByUserId(id){
+    return data.workouts.filter((workout)=> workout.userID === id)
 }
 
 function addWorkout(workout){
@@ -32,7 +32,7 @@ function searchWorkout(searchTerm){
 
 module.exports = {
     getWorkouts,
-    getWorkoutByUserId,
+    getWorkoutsByUserId,
     addWorkout,
     updateWorkout,
     deleteWorkout,

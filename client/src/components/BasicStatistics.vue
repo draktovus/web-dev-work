@@ -1,7 +1,21 @@
 <script setup lang="ts">
 import { getDistanceUnit, getPaceUnit } from '@/models/measurement'
-import { useStats } from '@/models/workouts'
-const data = useStats()
+import { useSession } from '@/models/session';
+import { getWorkoutsByUserId, type Workout } from '@/models/workout';
+import { calcStats } from '@/models/statistics'
+import { ref } from 'vue';
+
+//const data = useStats()
+
+const data = ref<Workout[]>([])
+getWorkoutsByUserId( useSession().user?.id ?? 0 ).then(res => {
+  console.log(res)
+  res.forEach(w => {
+    data.value.push(w)
+  })
+})
+const stats = calcStats(data.value)
+
 </script>
 
 <template>
@@ -25,7 +39,7 @@ const data = useStats()
       </div>
     </div>
     <div class="column is-half">
-      <div v-for="(item, index) in data" class="box" :key="item.distance">
+      <div v-for="(item, index) in stats" class="box" :key="item.distance">
         <h1 class="title is-4 has-text-centered">{{ index }}</h1>
         <div class="columns is-multiline">
           <div class="column is-half">

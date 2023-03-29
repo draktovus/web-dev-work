@@ -1,11 +1,10 @@
 <script setup lang="ts">
-import { useSession } from '@/models/session'
+import { useSession, postApi } from '@/models/session'
 import WorkoutMedia from '@/components/WorkoutMedia.vue'
 import AddWorkoutModal from '@/components/AddWorkoutModal.vue'
 import DeleteWorkout from '@/components/DeleteWorkoutModal.vue'
-import type { Workout } from '@/models/workout'
-import { reactive } from 'vue'
-import { useUserWorkouts, workouts } from '@/models/workouts'
+import { type Workout, getWorkouts } from '@/models/workout'
+import { reactive, ref } from 'vue'
 
 const session = useSession()
 const modalBooleans = reactive({
@@ -29,10 +28,13 @@ function submit(form: Workout) {
   // https://stackoverflow.com/questions/62847820/how-to-copy-json-object-without-reference-in-vue
   const item: Workout = JSON.parse(JSON.stringify(form))
 
-  const uWorkouts = useUserWorkouts()
-  uWorkouts.value.push(item)
-  workouts.push(item)
+  postApi('workouts', item)
 }
+
+const workouts = ref<Workout[]>([])
+getWorkouts().then(data => {
+  workouts.value = data
+})
 </script>
 
 <template>

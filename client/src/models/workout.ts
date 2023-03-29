@@ -1,7 +1,8 @@
-import workouts from '@/data/workouts.json'
+import { api } from './customFetch';
 /**
     {
       "userID": 1,
+      "UID": 1,
       "title": "Daily Walk At New Paltz",
       "content": "I walked around New Paltz",
       "picture": "https://www.usnews.com/dims4/USNEWS/f5b7039/17177859217/resize/800x540%3E/quality/85/?url=https%3A%2F%2Fmedia.beam.usnews.com%2F0d%2Fe8642fe073041e9345dd1b9d7807a5%2Fcollege-photo_14230.jpg",
@@ -16,6 +17,7 @@ import workouts from '@/data/workouts.json'
 */
 export interface Workout {
   userID: number
+  UID: number
   title: string
   content: string
   picture: string
@@ -28,6 +30,10 @@ export interface Workout {
   type: string
 }
 
-export function useWorkouts(): Workout[] {
-  return workouts.workouts
+export function getWorkouts(): Promise<Workout[]>{
+  return api('workouts')
+}
+
+export function getWorkoutsByUserId(id:number): Promise<Workout[]>{
+  return api('workouts/'+ id)
 }

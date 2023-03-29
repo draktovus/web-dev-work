@@ -1,8 +1,12 @@
 <script setup lang="ts">
 import WorkoutMedia from '@/components/WorkoutMedia.vue'
-import { workouts } from '@/models/workouts'
+import { getWorkouts, type Workout } from '@/models/workout';
+import {ref} from 'vue';
 
-const allWorkouts = workouts
+const allWorkouts = ref<Workout[]>([])
+getWorkouts().then(data => {
+  allWorkouts.value = data;
+});
 </script>
 
 <template>

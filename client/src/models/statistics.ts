@@ -1,16 +1,8 @@
-import { useWorkouts, type Workout } from '@/models/workout'
 import { computed, reactive, ref } from 'vue'
 import { convertMetricToImperial, convertImperialToMetric, measurementSystem } from './measurement'
+import type { Workout } from '@/models/workout'
 
 const userWorkouts = ref([] as Workout[])
-
-//any changes can be listened to and added to view
-export const workouts = reactive(useWorkouts())
-
-export function useUserWorkouts() {
-  return userWorkouts
-}
-
 //Using this website for the formula to determine calories
 //https://blog.nasm.org/metabolic-equivalents-for-weight-loss
 //METS X 3.5 X BW (KG) / 200 = KCAL/MIN.\
@@ -121,5 +113,10 @@ export function useTodayStats() {
 }
 
 export function useStats() {
+  return stats
+}
+
+export function calcStats(UserWorkouts:Workout[]){
+  userWorkouts.value = UserWorkouts
   return stats
 }
