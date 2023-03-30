@@ -5,9 +5,9 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
-    }
+    },
+    "lib": ["ES2020", "DOM"]
   },
-
   "references": [
     {
       "path": "./tsconfig.config.json"
