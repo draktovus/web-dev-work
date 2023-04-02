@@ -68,7 +68,27 @@ const AllTimeStatsDuration = computed(() => {
   )
 })
 const AllTimeStatsPace = computed(() =>
-  userWorkouts.value.reduce((total, item) => total + item.duration, 0).toFixed(2)
+  {
+    //Get distance
+    const dist = Number.parseInt(AllTimeStatsDistance.value)
+    //Get duration in seconds
+    let seconds = 0
+
+    userWorkouts.value.forEach((workout) => {
+      if (workout.durationUnit == 'seconds') {
+        seconds += workout.duration
+      } else if (workout.durationUnit == 'minutes') {
+        seconds += (workout.duration * 60)
+      } else if (workout.durationUnit == 'hours') {
+        seconds += (workout.duration * 3600)
+      }
+    })
+
+    // Divide v = d/t
+    const pace = (dist / seconds) * (60/1) * (60/1)
+    return pace.toFixed(2)
+  }
+  
 )
 const AllTimeStatsCalories = computed(() =>
   userWorkouts.value

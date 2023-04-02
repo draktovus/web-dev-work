@@ -29,6 +29,7 @@ function submit(form: Workout) {
   const item: Workout = JSON.parse(JSON.stringify(form))
 
   postApi('workouts', item)
+  workouts.value.push(form)
 }
 
 const workouts = ref<Workout[]>([])
