@@ -70,7 +70,7 @@ const AllTimeStatsDuration = computed(() => {
 const AllTimeStatsPace = computed(() =>
   {
     //Get distance
-    const dist = Number.parseInt(AllTimeStatsDistance.value)
+    const dist = +AllTimeStatsDistance.value
     //Get duration in seconds
     let seconds = 0
 
