@@ -1,17 +1,29 @@
 const API_URL = 'http://localhost:3000/api/v1/'
 
-export function rest(url: string){
-    return fetch(url).then(res => res.json())
+export function rest(url: string, data?:any, method?:string, headers?:any){
+    return fetch(url, {
+        method: method ?? (data ? 'POST' : 'GET'),
+        headers: {
+            'Content-Type': 'application/JSON',
+            ...headers
+        },
+        body: data ? JSON.stringify(data): undefined
+    } )
+        .then(res => res.ok 
+            ? res.json()
+            : res.json().then(x => {throw({...x, message: x.error})}))
 }
 
-export function api(url:string){
-    return rest(API_URL + url)
+export function api(url:string, data?:any, method?:string, headers?:any){
+    return rest(API_URL + url, data,method,headers)
 }
 
-export function postApi(url:string, object:any){
-    return fetch(API_URL + url, {
-        headers: {'Content-type': 'application/json'},
-        method: 'POST',
-        body: JSON.stringify(object)
-    }).then(res => res.json())
+export type DataEnvelope<T> = {
+    data: T,
+    isSuccess: boolean,
+    error?: string
+}
+
+export type DataListEnvelope<T> = DataEnvelope<T[]> & {
+    total:number,
 }

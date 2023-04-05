@@ -76,7 +76,7 @@ export function useDB() {
 }
 
 // API
-export function api(url:string){
+export function api(url:string, data?:any, method?:string, headers?:any){
   session.isLoading = true
   return customFetch.api(url)
   .catch(err => {
@@ -91,13 +91,3 @@ export function api(url:string){
   })
 }
 
-export function postApi(url:string, object:any){
-  return customFetch.postApi(url, object)
-  .catch(err => {
-    console.error(err);
-    session.messages.push({
-      msg: err.message ?? JSON.stringify(err),
-      type: "error",
-    })
-  })
-}

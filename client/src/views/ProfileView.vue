@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useSession, postApi } from '@/models/session'
+import { useSession, api } from '@/models/session'
 import WorkoutMedia from '@/components/WorkoutMedia.vue'
 import AddWorkoutModal from '@/components/AddWorkoutModal.vue'
 import DeleteWorkout from '@/components/DeleteWorkoutModal.vue'
@@ -28,7 +28,7 @@ function submit(form: Workout) {
   // https://stackoverflow.com/questions/62847820/how-to-copy-json-object-without-reference-in-vue
   const item: Workout = JSON.parse(JSON.stringify(form))
 
-  postApi('workouts', item)
+  api('workouts', item, 'POST')
   workouts.value.push(form)
 }
 
