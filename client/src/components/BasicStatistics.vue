@@ -9,8 +9,7 @@ import { ref } from 'vue';
 
 const data = ref<Workout[]>([])
 getWorkoutsByUserId( useSession().user?.id ?? 0 ).then(res => {
-  console.log(res)
-  res.forEach(w => {
+  res.data.forEach(w => {
     data.value.push(w)
   })
 })
@@ -39,7 +38,7 @@ const stats = calcStats(data.value)
       </div>
     </div>
     <div class="column is-half">
-      <div v-for="(item, index) in stats" class="box" :key="item.distance">
+      <div v-for="(item, index) in stats" class="box" :key="item.calories">
         <h1 class="title is-4 has-text-centered">{{ index }}</h1>
         <div class="columns is-multiline">
           <div class="column is-half">

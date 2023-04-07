@@ -5,7 +5,7 @@ import {ref} from 'vue';
 
 const allWorkouts = ref<Workout[]>([])
 getWorkouts().then(data => {
-  allWorkouts.value = data;
+  allWorkouts.value = data.data;
 });
 </script>
 

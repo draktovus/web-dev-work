@@ -1,4 +1,4 @@
-import { api } from './customFetch';
+import { api, type DataEnvelope, type DataListEnvelope} from './customFetch';
 /**
     {
       "userID": 1,
@@ -30,10 +30,10 @@ export interface Workout {
   type: string
 }
 
-export function getWorkouts(): Promise<Workout[]>{
+export function getWorkouts(): Promise<DataListEnvelope<Workout>>{
   return api('workouts')
 }
 
-export function getWorkoutsByUserId(id:number): Promise<Workout[]>{
+export function getWorkoutsByUserId(id:number): Promise<DataListEnvelope<Workout>>{
   return api('workouts/'+ id)
 }

@@ -34,7 +34,7 @@ function submit(form: Workout) {
 
 const workouts = ref<Workout[]>([])
 getWorkouts().then(data => {
-  workouts.value = data
+  workouts.value = data.data
 })
 </script>
 

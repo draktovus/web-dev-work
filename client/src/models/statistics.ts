@@ -83,6 +83,9 @@ const AllTimeStatsPace = computed(() =>
         seconds += (workout.duration * 3600)
       }
     })
+    if (seconds == 0) {
+      return 0
+    }
 
     // Divide v = d/t
     const pace = (dist / seconds) * (60/1) * (60/1)
