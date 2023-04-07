@@ -5,6 +5,7 @@ import AddWorkoutModal from '@/components/AddWorkoutModal.vue'
 import DeleteWorkout from '@/components/DeleteWorkoutModal.vue'
 import { type Workout, getWorkouts } from '@/models/workout'
 import { reactive, ref } from 'vue'
+import { type Biometric, getBiometricById } from '@/models/biometrics'
 
 const session = useSession()
 const modalBooleans = reactive({
@@ -38,6 +39,11 @@ function submit(form: Workout) {
 const workouts = ref<Workout[]>([])
 getWorkouts().then((data) => {
   workouts.value = data.data
+})
+
+const biometrics = ref<Biometric>({} as Biometric)
+getBiometricById(session.user ? session.user.id: 0).then((res)=>{
+  biometrics.value = res.data
 })
 </script>
 

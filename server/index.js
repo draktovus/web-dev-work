@@ -5,6 +5,7 @@ const express = require('express');
 const app = express();
 const users = require('./controllers/users')
 const workouts = require('./controllers/workouts')
+const biometrics = require('./controllers/biometrics')
 
 // 127.0.0.1 is the loopback address
 const hostname = '127.0.0.1';
@@ -28,6 +29,7 @@ app
     })
     .use('/api/v1/users', users)
     .use('/api/v1/workouts', workouts)
+    .use('/api/v1/biometrics', biometrics)
 
 // Catch all (called deep linking)
 app.get('*', (req,res) => {

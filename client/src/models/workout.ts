@@ -1,4 +1,5 @@
-import { api, type DataEnvelope, type DataListEnvelope } from './customFetch'
+import type  { DataListEnvelope } from './customFetch'
+import { api } from './session'
 /**
     {
       "userID": 1,

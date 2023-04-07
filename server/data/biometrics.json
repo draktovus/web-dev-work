@@ -1,0 +1,14 @@
+{
+    "biometrics":[
+        {
+            "key": 1,
+            "userId": 1,
+            "height": 160,
+            "heightUnit": "metric",
+            "weight": 70,
+            "weightUnit": "kg",
+            "gender": "male",
+            "dateOfBirth": "2001-03-30"
+        }
+    ]
+}
