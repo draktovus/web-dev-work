@@ -4,6 +4,7 @@ import { RouterLink } from 'vue-router'
 import LoginBadge from './LoginBadge.vue'
 import { useSession } from '@/models/session'
 import MeasurementSystem from './MeasurementSystem.vue'
+import Notifications from './Notifications.vue'
 
 const session = useSession()
 
@@ -67,6 +68,9 @@ function toggleMenu() {
       </div>
 
       <div class="navbar-end">
+        <div class="navbar-item">
+          <Notifications />
+        </div>
         <MeasurementSystem></MeasurementSystem>
         <LoginBadge />
       </div>

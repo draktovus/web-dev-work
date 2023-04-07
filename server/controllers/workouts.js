@@ -42,7 +42,7 @@ router
     const workout = req.body;
 
     console.log(req.query)
-    console.log(req.headers)
+    console.log(req.headers) 
     console.log(req.body)
 
     model.addWorkout(workout);

@@ -1,20 +1,19 @@
 <script setup lang="ts">
 import { getDistanceUnit, getPaceUnit } from '@/models/measurement'
-import { useSession } from '@/models/session';
-import { getWorkoutsByUserId, type Workout } from '@/models/workout';
+import { useSession } from '@/models/session'
+import { getWorkoutsByUserId, type Workout } from '@/models/workout'
 import { calcStats } from '@/models/statistics'
-import { ref } from 'vue';
+import { ref } from 'vue'
 
 //const data = useStats()
 
 const data = ref<Workout[]>([])
-getWorkoutsByUserId( useSession().user?.id ?? 0 ).then(res => {
-  res.data.forEach(w => {
+getWorkoutsByUserId(useSession().user?.id ?? 0).then((res) => {
+  res.data.forEach((w) => {
     data.value.push(w)
   })
 })
 const stats = calcStats(data.value)
-
 </script>
 
 <template>

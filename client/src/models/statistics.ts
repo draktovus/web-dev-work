@@ -67,32 +67,29 @@ const AllTimeStatsDuration = computed(() => {
     `${seconds < 10 ? `0${seconds}` : seconds.toString()}`
   )
 })
-const AllTimeStatsPace = computed(() =>
-  {
-    //Get distance
-    const dist = +AllTimeStatsDistance.value
-    //Get duration in seconds
-    let seconds = 0
+const AllTimeStatsPace = computed(() => {
+  //Get distance
+  const dist = +AllTimeStatsDistance.value
+  //Get duration in seconds
+  let seconds = 0
 
-    userWorkouts.value.forEach((workout) => {
-      if (workout.durationUnit == 'seconds') {
-        seconds += workout.duration
-      } else if (workout.durationUnit == 'minutes') {
-        seconds += (workout.duration * 60)
-      } else if (workout.durationUnit == 'hours') {
-        seconds += (workout.duration * 3600)
-      }
-    })
-    if (seconds == 0) {
-      return 0
+  userWorkouts.value.forEach((workout) => {
+    if (workout.durationUnit == 'seconds') {
+      seconds += workout.duration
+    } else if (workout.durationUnit == 'minutes') {
+      seconds += workout.duration * 60
+    } else if (workout.durationUnit == 'hours') {
+      seconds += workout.duration * 3600
     }
-
-    // Divide v = d/t
-    const pace = (dist / seconds) * (60/1) * (60/1)
-    return pace.toFixed(2)
+  })
+  if (seconds == 0) {
+    return 0
   }
-  
-)
+
+  // Divide v = d/t
+  const pace = (dist / seconds) * (60 / 1) * (60 / 1)
+  return pace.toFixed(2)
+})
 const AllTimeStatsCalories = computed(() =>
   userWorkouts.value
     .reduce((total, workout) => {
@@ -139,7 +136,7 @@ export function useStats() {
   return stats
 }
 
-export function calcStats(UserWorkouts:Workout[]){
+export function calcStats(UserWorkouts: Workout[]) {
   userWorkouts.value = UserWorkouts
   return stats
 }

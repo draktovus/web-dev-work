@@ -21,9 +21,9 @@ const session = reactive({
   user: null as User | null,
   isLoading: false as boolean,
   messages: [] as {
-    msg: string,
-    type: "success" | "error" | "warning" | "info",
-}[],
+    msg: string
+    type: 'success' | 'danger' | 'warning' | 'info'
+  }[]
 })
 
 export function useSession() {
@@ -76,18 +76,27 @@ export function useDB() {
 }
 
 // API
-export function api(url:string, data?:any, method?:string, headers?:any){
+export function api(url: string, data?: any, method?: string, headers?: any) {
   session.isLoading = true
-  return customFetch.api(url)
-  .catch(err => {
-      console.error(err);
+  return customFetch
+    .api(url, data, method, headers)
+    .catch((err) => {
+      console.error(err)
       session.messages.push({
-          msg: err.message ?? JSON.stringify(err),
-          type: "error",
+        msg: err.message ?? JSON.stringify(err),
+        type: 'danger'
       })
-  })
-  .finally(()=>{
-      session.isLoading = false;
-  })
+    })
+    .finally(() => {
+      session.isLoading = false
+    })
 }
 
+export function addMessage(msg: string, type: 'success' | 'danger' | 'warning' | 'info') {
+  console.log({ msg, type })
+  session.messages.push({ msg, type })
+}
+
+export function deleteMessage(index: number) {
+  session.messages.splice(index, 1)
+}
