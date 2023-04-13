@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { login, useSession } from '@/models/session'
+import { useLogin, useSession } from '@/models/session'
 import { reactive } from 'vue'
 import { useRouter } from 'vue-router'
 
@@ -10,7 +10,9 @@ const user = reactive({
   password: null as string | null
 })
 
-function tryLogin() {
+const tryLogin = useLogin();
+
+/**function tryLogin() {
   if (user.name != null && user.password != null) {
     login(user.name, user.password)
     if (session.user) {
@@ -18,6 +20,7 @@ function tryLogin() {
     }
   }
 }
+*/
 </script>
 
 <template>
@@ -53,7 +56,7 @@ function tryLogin() {
 
     <div class="field is-grouped">
       <p class="control">
-        <button class="button is-success" @click="tryLogin">Login</button>
+        <button class="button is-success" @click="tryLogin(user.name, user.password)">Login</button>
       </p>
       <p class="control">
         <button class="button is-info">Sign Up</button>

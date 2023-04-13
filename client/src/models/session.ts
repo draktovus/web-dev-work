@@ -1,6 +1,7 @@
 import { reactive } from 'vue'
 import { useUsers } from './users'
 import * as customFetch from './customFetch'
+import { useRouter } from 'vue-router'
 
 // acts as db for now
 const users = useUsers()
@@ -21,54 +22,50 @@ const session = reactive({
   user: null as User | null,
   isLoading: false as boolean,
   messages: [] as {
-    msg: string
-    type: 'success' | 'danger' | 'warning' | 'info'
-  }[]
+    msg: string,
+    type: "success" | "danger" | "warning" | "info",
+  }[],
+  redirectUrl: null as string | null,
 })
 
 export function useSession() {
   return session
 }
 
-export function login(username: string | null, password: string | null) {
-  if (username != null && password != null) {
-    for (let index = 0; index < users.length; index++) {
-      const element = users[index]
-      if (element.name == username && element.password == password) {
-        session.user = {
-          name: element.name,
-          firstName: element.firstName,
-          lastName: element.lastName,
-          handle: element.handle,
-          id: element.id,
-          token: element.token,
-          emails: element.emails,
-          photo: element.photo,
-          isAdmin: element.isAdmin
+export function useLogin() {
+  const router = useRouter();
+
+  return function (username:string|null,password:string|null) {
+    if (username != null && password != null) {
+      for (let index = 0; index < users.length; index++) {
+        const element = users[index]
+        if (element.name == username && element.password == password) {
+          session.user = {
+            name: element.name,
+            firstName: element.firstName,
+            lastName: element.lastName,
+            handle: element.handle,
+            id: element.id,
+            token: element.token,
+            emails: element.emails,
+            photo: element.photo,
+            isAdmin: element.isAdmin
+          }
         }
-        console.log('Logged in!')
-        //const userWorkouts = useUserWorkouts()
-        //const workouts = ref<Workout[]>();
-        //getWorkouts().then(data => {
-        //  workouts.value = data
-        //  workouts.value.forEach((workout) => {
-        //    if (workout.userID == useSession().user?.id) {
-        //      userWorkouts.value.push(workout)
-        //    }
-        //  })
-        // })
-        break
       }
     }
+    router.push(session.redirectUrl ?? "/");
+    session.redirectUrl = null;
   }
 }
 
-export function logout() {
-  session.user = null
-  //const userWorkouts = useUserWorkouts()
-  // one way to clear an array
-  // https://stackoverflow.com/questions/1232040/how-do-i-empty-an-array-in-javascript
-  //userWorkouts.value.length = 0
+export function useLogout() {
+  const router = useRouter()
+  return function () {
+    session.user = null;
+
+    router.push('/login')
+  }
 }
 
 export function useDB() {
