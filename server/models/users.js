@@ -8,6 +8,10 @@ function getUserById(id){
     return data.users.find(user => user.id === id);
 }
 
+function getUserByName(name){
+    return data.users.find(user => user.name === name);
+}
+
 function addUser(user){
     user.id = data.users.length + 1;
     data.users.push(product);
@@ -32,6 +36,7 @@ function searchUser(searchTerm){
 module.exports = {
     getUsers,
     getUserById,
+    getUserByName,
     addUser,
     updateUser,
     deleteUser,

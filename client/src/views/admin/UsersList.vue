@@ -1,7 +1,13 @@
 <script setup lang="ts">
-import { useDB } from '@/models/session'
+import { RouterLink } from 'vue-router';
+import { getUsers, type User } from '@/models/users'
+import { ref } from 'vue'
 
-const users = useDB()
+const users = ref<User[]>([])
+
+getUsers().then((res) => {
+  users.value = res.data
+})
 </script>
 
 <template>
@@ -58,11 +64,11 @@ const users = useDB()
           <td>{{ user.isAdmin }}</td>
           <td>
             <div class="buttons">
-              <button class="button">
+              <RouterLink class="button" :to="'/admin/users/edit/' + user.id">
                 <span class="icon">
                   <i class="fas fa-edit"></i>
                 </span>
-              </button>
+              </RouterLink>
               <button class="button">
                 <span class="icon">
                   <i class="fas fa-trash"></i>

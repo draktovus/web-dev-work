@@ -1,32 +1,29 @@
 <script setup lang="ts">
 import { displayDistanceOfWorkout, getDistanceUnit } from '@/models/measurement'
-import { getUserFromID } from '@/models/users'
+import { getUser, type User } from '@/models/users'
 import type { Workout } from '@/models/workout'
 import { ref } from 'vue'
-defineProps<{
+const props = defineProps<{
   workout: Workout
 }>()
 const distance = ref(0)
+const user = ref<User>({} as User)
+getUser(props.workout.userID).then((res) => {
+  user.value = res.data
+})
 </script>
 
 <template>
   <article class="media box">
     <figure class="media-left">
       <p class="image is-64x64">
-        <img
-          class="is-rounded"
-          :src="getUserFromID(workout.userID)?.photo"
-          alt="placeholder image"
-        />
+        <img class="is-rounded" :src="user.photo" alt="placeholder image" />
       </p>
     </figure>
     <div class="media-content">
       <div class="content">
-        <strong class="mr-2"
-          >{{ getUserFromID(workout.userID)?.firstName
-          }}{{ getUserFromID(workout.userID)?.lastName }}</strong
-        >
-        <small class="mr-2">{{ getUserFromID(workout.userID)?.handle }}</small>
+        <strong class="mr-2">{{ user.firstName }}{{ user.lastName }}</strong>
+        <small class="mr-2">{{ user.handle }}</small>
         <small>
           {{ workout.date }}
         </small>

@@ -1,4 +1,4 @@
-import type  { DataEnvelope, DataListEnvelope } from './customFetch'
+import type { DataEnvelope, DataListEnvelope } from './customFetch'
 import { api } from './session'
 
 /**
@@ -14,16 +14,16 @@ import { api } from './session'
     }
  */
 export interface Biometric {
-    key: number;
-    userId: number;
-    height: number;
-    heightUnit: string;
-    weight: number;
-    weightUnit: string;
-    gender: string;
-    dateOfBirth: string;
+  key: number
+  userId: number
+  height: number
+  heightUnit: string
+  weight: number
+  weightUnit: string
+  gender: string
+  dateOfBirth: string
 }
 
-export function getBiometricById(id:number):Promise<DataEnvelope<Biometric>> {
-    return api('biometrics/'+ id)
+export function getBiometricById(id: number): Promise<DataEnvelope<Biometric>> {
+  return api('biometrics/' + id)
 }

@@ -6,21 +6,11 @@ import { useRouter } from 'vue-router'
 const router = useRouter()
 const session = useSession()
 const user = reactive({
-  name: null as string | null,
-  password: null as string | null
+  name: '' as string,
+  password: '' as string
 })
 
-const tryLogin = useLogin();
-
-/**function tryLogin() {
-  if (user.name != null && user.password != null) {
-    login(user.name, user.password)
-    if (session.user) {
-      router.push('/')
-    }
-  }
-}
-*/
+const login = useLogin()
 </script>
 
 <template>
@@ -56,7 +46,7 @@ const tryLogin = useLogin();
 
     <div class="field is-grouped">
       <p class="control">
-        <button class="button is-success" @click="tryLogin(user.name, user.password)">Login</button>
+        <button class="button is-success" @click="login(user)">Login</button>
       </p>
       <p class="control">
         <button class="button is-info">Sign Up</button>

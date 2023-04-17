@@ -42,7 +42,7 @@ getWorkouts().then((data) => {
 })
 
 const biometrics = ref<Biometric>({} as Biometric)
-getBiometricById(session.user ? session.user.id: 0).then((res)=>{
+getBiometricById(session.user ? session.user.id : 0).then((res) => {
   biometrics.value = res.data
 })
 </script>

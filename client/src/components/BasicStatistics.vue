@@ -10,7 +10,7 @@ import { getBiometricById, type Biometric } from '@/models/biometrics'
 const session = useSession()
 
 const data = ref<Workout[]>([])
-getWorkoutsByUserId(session.user ? session.user.id:0).then((res) => {
+getWorkoutsByUserId(session.user ? session.user.id : 0).then((res) => {
   res.data.forEach((w) => {
     data.value.push(w)
   })
@@ -18,7 +18,7 @@ getWorkoutsByUserId(session.user ? session.user.id:0).then((res) => {
 const stats = calcStats(data.value)
 
 const biometrics = ref<Biometric>({} as Biometric)
-getBiometricById(session.user ? session.user.id: 0).then((res)=>{
+getBiometricById(session.user ? session.user.id : 0).then((res) => {
   biometrics.value = res.data
 })
 </script>
@@ -30,7 +30,13 @@ getBiometricById(session.user ? session.user.id: 0).then((res)=>{
         <h1 class="title is-4">Biometrics</h1>
         <p class="content">Height: {{ biometrics.height }} cm</p>
         <p class="content">Weight: {{ biometrics.weight }} kg</p>
-        <p class="content">Age: {{ new Date().getFullYear() - Number(biometrics.dateOfBirth ? biometrics.dateOfBirth.substring(0,4) : 1990) }}</p>
+        <p class="content">
+          Age:
+          {{
+            new Date().getFullYear() -
+            Number(biometrics.dateOfBirth ? biometrics.dateOfBirth.substring(0, 4) : 1990)
+          }}
+        </p>
         <p class="content">Sex: {{ biometrics.gender }}</p>
       </div>
       <div class="box">

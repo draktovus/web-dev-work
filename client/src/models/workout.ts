@@ -1,4 +1,4 @@
-import type  { DataListEnvelope } from './customFetch'
+import type { DataListEnvelope } from './customFetch'
 import { api } from './session'
 /**
     {

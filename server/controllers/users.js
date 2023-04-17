@@ -36,6 +36,25 @@ router
     res.send(data)
 })
 
+.post('/login', (req,res, next) => {
+    const user = req.body;
+    const userServer = model.getUserByName(user.name);
+    if (userServer !== undefined) {
+        if (userServer.password === user.password) {
+            const data = {
+                data: userServer,
+                total: 1,
+                isSuccess: true
+            }
+            res.send(data);
+            return
+        }
+        next(new Error("Username or password didnt match."))
+    }else{
+        next(new Error("Bad login"))
+    }
+})
+
 .post('/', (req,res) => {
     const user = req.body;
 
@@ -53,6 +72,8 @@ router
 
     res.send(data);
 })
+
+
 
 .patch('/:id', (req,res) => {
     const user = req.body;

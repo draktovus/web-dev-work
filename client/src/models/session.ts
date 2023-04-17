@@ -1,22 +1,8 @@
 import { reactive } from 'vue'
-import { useUsers } from './users'
-import * as customFetch from './customFetch'
+import type { User } from '@/models/users'
+import { getUsers } from './users'
 import { useRouter } from 'vue-router'
-
-// acts as db for now
-const users = useUsers()
-
-interface User {
-  name: string
-  firstName: string
-  lastName: string
-  handle: string
-  isAdmin: boolean
-  emails: Array<string>
-  photo: string
-  id: number
-  token?: string
-}
+import * as customFetch from './customFetch'
 
 const session = reactive({
   user: null as User | null,
@@ -33,45 +19,29 @@ export function useSession() {
 }
 
 export function useLogin() {
-  const router = useRouter();
+  const router = useRouter()
 
-  return function (username:string|null,password:string|null) {
-    if (username != null && password != null) {
-      for (let index = 0; index < users.length; index++) {
-        const element = users[index]
-        if (element.name == username && element.password == password) {
-          session.user = {
-            name: element.name,
-            firstName: element.firstName,
-            lastName: element.lastName,
-            handle: element.handle,
-            id: element.id,
-            token: element.token,
-            emails: element.emails,
-            photo: element.photo,
-            isAdmin: element.isAdmin
-          }
-        }
+  return function (user: any) {
+    api('users/login', { name: user.name, password: user.password }, 'POST').then((res) => {
+      if (res.isSuccess) {
+        session.user = res.data
       }
-    }
-    router.push(session.redirectUrl ?? "/");
-    session.redirectUrl = null;
+    })
+    router.push(session.redirectUrl ?? '/')
+    session.redirectUrl = null
   }
 }
 
 export function useLogout() {
   const router = useRouter()
   return function () {
-    session.user = null;
+    console.log({ router })
+
+    session.user = null
 
     router.push('/login')
   }
 }
-
-export function useDB() {
-  return users
-}
-
 // API
 export function api(url: string, data?: any, method?: string, headers?: any) {
   session.isLoading = true

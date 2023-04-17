@@ -1,4 +1,5 @@
-import users from '@/data/users.json'
+import { api } from '@/models/session'
+import type { DataEnvelope, DataListEnvelope } from './customFetch'
 
 /**
  * {
@@ -16,7 +17,7 @@ import users from '@/data/users.json'
         "token": "nothing"
     }
  */
-export interface UserDB {
+export interface User {
   [key: number]: number
   id: number
   name: string
@@ -30,15 +31,14 @@ export interface UserDB {
   token: string
 }
 
-export function useUsers(): UserDB[] {
-  return users.users
+export function getUsers(): Promise<DataListEnvelope<User>> {
+  return api('users')
 }
 
-export function getUserFromID(id: number): UserDB | null {
-  for (let i = 0; i < users.users.length; i++) {
-    if (users.users[i].id === id) {
-      return users.users[i]
-    }
-  }
-  return null
+export function getUser(id: number): Promise<DataEnvelope<User>> {
+  return api(`users/${id}`)
+}
+
+export function updateUser(user: User) {
+  return api('users/update', user, 'PATCH')
 }

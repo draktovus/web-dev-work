@@ -6,7 +6,6 @@ import {
 } from 'vue-router'
 import LoginView from '../views/LoginView.vue'
 import ProfileView from '@/views/ProfileView.vue'
-import AdminView from '@/views/AdminUsers.vue'
 import { useSession } from '@/models/session'
 import StatisticsView from '@/views/StatisticsView.vue'
 import FriendActivity from '@/views/FriendActivity.vue'
@@ -39,13 +38,7 @@ const router = createRouter({
       component: ProfileView,
       beforeEnter: secureRoute
     },
-    {
-      path: '/admin/users',
-      name: 'adminusers',
-      component: AdminView,
-      beforeEnter: requiresAdmin,
-      meta: { requiresAuth: true }
-    },
+
     {
       path: '/statistics',
       name: 'statistics',
@@ -57,6 +50,20 @@ const router = createRouter({
       name: 'friends',
       component: FriendActivity,
       beforeEnter: secureRoute
+    },
+    {
+      path: '/admin/users',
+      name: 'admin-list-users',
+      component: () => import('@/views/admin/UsersList.vue'),
+      beforeEnter: requiresAdmin,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: '/admin/users/edit/:id?',
+      name: 'admin-edit-user',
+      component: () => import('@/views/admin/UsersEdit.vue'),
+      beforeEnter: requiresAdmin,
+      meta: { requiresAuth: true }
     }
   ]
 })
