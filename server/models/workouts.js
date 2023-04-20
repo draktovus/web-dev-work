@@ -1,40 +1,78 @@
-const data = require('../data/workouts.json')
+const data = require("../data/workouts.json");
+const { connect, ObjectId } = require("./mongo");
+
+const COLLECTION_NAME = "workouts";
 
 //Create, Read, Update, Delete
 
-function getWorkouts(){
-    return data.workouts;
+async function collection() {
+  const db = await connect();
+  return db.collection(COLLECTION_NAME);
 }
 
-function getWorkoutsByUserId(id){
-    return data.workouts.filter((workout)=> workout.userID === id)
+async function getWorkouts() {
+  const col = await collection();
+  const items = await col.find().toArray();
+  return items;
 }
 
-function addWorkout(workout){
-    workout.UID = data.workouts.length + 1
-    data.workouts.push(workout)
+async function getWorkoutsByUserId(id) {
+  const col = await collection();
+  const items = await col.find({ userID: id }).toArray();
+
+  return items;
 }
 
-function updateWorkout(workout){
-    const index = data.workouts.findIndex(w => w.userID === workout.userID);
-    data.workouts[index] = workout;
+async function addWorkout(workout) {
+  const col = await collection();
+  const result = await col.insertOne(workout);
+  return result;
 }
 
-function deleteWorkout(workout){
-    const index = data.workouts.findIndex(w => w.id === user.id);
-    data.workouts.splice(index, 1);
+async function updateWorkout(workout) {
+  const col = await collection();
+  const result = await col.findOneAndUpdate({ _id: workout._id }, workout);
+
+  return result;
 }
 
-function searchWorkout(searchTerm){
-    const workout = data.workouts.filter(workout => workout.content.toLowerCase().includes(searchTerm.toLowerCase()));
-    return workout;
+async function deleteWorkout(workout) {
+  const col = await collection();
+  const result = await col.findOneAndDelete({ _id: workout._id });
+  return result;
+}
+
+async function searchWorkout(searchTerm) {
+  const col = await collection();
+  const items = await col.aggregate([
+    {
+      $search: {
+        index: "searchWorkouts",
+        text: {
+          query: searchTerm,
+          path: {
+            wildcard: "*",
+          },
+        },
+      },
+    },
+    {
+      $project: {
+        _id: 0,
+        userID: 1,
+        content: 1,
+        score: { $meta: "searchScore" },
+      },
+    },
+  ]);
+  return items.toArray();
 }
 
 module.exports = {
-    getWorkouts,
-    getWorkoutsByUserId,
-    addWorkout,
-    updateWorkout,
-    deleteWorkout,
-    searchWorkout
-}
+  getWorkouts,
+  getWorkoutsByUserId,
+  addWorkout,
+  updateWorkout,
+  deleteWorkout,
+  searchWorkout,
+};

@@ -31,8 +31,15 @@ function submit(form: Workout) {
 
   api('workouts', item, 'POST').then((res) => {
     console.log(res)
-    workouts.value.push(res.data)
-    addMessage('Workout created successfully', `${res.isSuccess ? 'success' : 'danger'}`)
+    getWorkouts().then((data) => {
+      workouts.value = data.data
+    })
+    modalBooleans.isAddWorkoutModalActive = false
+    addMessage('Workout created successfully.', `${res.isSuccess ? 'success' : 'danger'}`)
+  })
+  .catch(res=>{
+    console.log(res)
+    addMessage('Workout could not be created.', `${res.isSuccess ? 'success' : 'danger'}`)
   })
 }
 

@@ -17,8 +17,8 @@ import { api } from './session'
     },
 */
 export interface Workout {
+  id:string
   userID: number
-  UID: number
   title: string
   content: string
   picture: string
