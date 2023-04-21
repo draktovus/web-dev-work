@@ -24,6 +24,7 @@ _id?: string | undefined;
     type: 'run' | 'walk' | 'cardio' | 'bike' | 'strength';
 */
 const formInfo = reactive<WorkoutForm>({
+  _id: '',
   userID: session.user ? session.user.id : -1,
   title: '',
   content: '',

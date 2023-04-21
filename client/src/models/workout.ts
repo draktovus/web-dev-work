@@ -43,7 +43,7 @@ export type WorkoutForm = {
   duration: number
   durationUnit: 'minutes' | 'hours' | 'seconds'
   location: string
-  date: Date
+  date: string
   type: 'run' | 'walk' | 'cardio' | 'bike' | 'strength'
 }
 

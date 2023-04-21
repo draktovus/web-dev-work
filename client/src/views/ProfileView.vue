@@ -30,10 +30,11 @@ function submit(form: WorkoutForm) {
     form.picture = 'https://bulma.io/images/placeholders/600x480.png'
   }
   form.userID = session.user ? session.user.id : -1
-  form.date = new Date(form.date)
+  
   // Better way to copy an object
   // https://stackoverflow.com/questions/62847820/how-to-copy-json-object-without-reference-in-vue
-  const item: Workout = JSON.parse(JSON.stringify(form))
+  let item: Workout = JSON.parse(JSON.stringify(form))
+  item.date = new Date(form.date)
 
   api('workouts', item, 'POST')
     .then((res) => {
