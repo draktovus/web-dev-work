@@ -40,8 +40,8 @@ async function add(item) {
 
 async function update(item) {
   const col = await collection();
-  const result = await col.findOneAndDelete(
-    { _id: new ObjectId(item.id) },
+  const result = await col.findOneAndUpdate(
+    { _id: item._id },
     { $set: item },
     { returnDocument: "after" }
   );
@@ -50,7 +50,7 @@ async function update(item) {
 
 async function deleteItem(id) {
   const col = await collection();
-  const result = await col.deleteOne({ _id: new ObjectId(id) });
+  const result = await col.deleteOne({ _id: id});
   return result.deletedCount;
 }
 

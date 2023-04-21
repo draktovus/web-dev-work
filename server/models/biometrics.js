@@ -8,58 +8,65 @@ async function collection(){
     return db.collection(COLLECTION_NAME);
 }
 
-async function getAllBiometrics(){
+async function getAll(page=1, pageSize=30){
     const col = await collection();
-    const biometrics = await col.find().toArray();
-    return biometrics;
+    const items = await col.find().skip((page-1) * pageSize).limit(pageSize).toArray();
+    const total = await col.countDocuments()
+    return {items, total};
 }
 
-async function getBiometricById(id){
+async function getById(id){
     const col = await collection();
     const biometric = await col.findOne({ userId: id });
     return biometric
 }
 
-async function addBiometric(biometricData){
+async function add(item){
     const col = await collection();
-    const biometric = await col.insertOne(biometricData);
+    const biometric = await col.insertOne(item);
+    item._id = biometric.insertedId;
     return biometric;
 }
 
-async function updateBiometric(biometricData){
+async function update(item){
     const col = await collection();
-    const biometric = await col.findOneAndUpdate({ _id: biometricData._id }, biometricData);
-    return biometric
+    const result = await col.findOneAndUpdate(
+        { _id: item._id },
+        { $set: item },
+        { returnDocument: "after" }
+      );
+    return result.value
 }
 
-async function deleteBiometric(biometric){
+async function deleteItem(item){
     const col = await collection();
-    const bio = await col.findOneAndDelete({ _id: biometric._id });
-    return bio
+    const result = await col.deleteOne({ _id: item._id });
+    return result.deletedCount;
 }
 
-async function searchBiometric(searchTerm){
+async function search(searchTerm, page = 1, pageSize = 30) {
     const col = await collection();
-    const pipeline = [
-    {
-        $search: {
-            text: {
-                query: searchTerm,
-                path: {
-                  wildcard: "*",
-                },
-            },
-        }
-    }
-    ]
-    const biometrics = await col.aggregate(pipeline).toArray();
-    return biometrics
-}
+    // option 'i' is case insensitive
+    const query = {
+      $or: [
+        { gender: { $regex: searchTerm, $options: "i" } },
+        { dateOfBirth: { $regex: searchTerm, $options: "i" } },
+        { userId: { $regex: searchTerm, $options: "i" } },
+      ],
+    };
+    const items = await col
+      .find(query)
+      .skip((page - 1) * pageSize)
+      .limit(pageSize)
+      .toArray();
+    const total = await col.countDocuments(query);
+    return { items, total };
+  }
 module.exports = {
-    getAllBiometrics,
-    getBiometricById,
-    addBiometric,
-    updateBiometric,
-    deleteBiometric,
-    searchBiometric
+    getAll,
+    getById,
+    add,
+    update,
+    deleteItem,
+    search
 }
