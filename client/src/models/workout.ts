@@ -17,6 +17,7 @@ import { api } from './session'
     },
 */
 export interface Workout {
+  _id:string
   id:string
   userID: number
   title: string
@@ -27,8 +28,23 @@ export interface Workout {
   duration: number
   durationUnit: string
   location: string
-  date: string
+  date: Date
   type: string
+}
+
+export type WorkoutForm = {
+  _id:string
+  userID:number
+  title: string
+  content: string
+  picture: string
+  distance: number
+  distanceUnit: "miles" | 'kilometers'
+  duration: number
+  durationUnit: 'minutes' | 'hours' | 'seconds'
+  location: string
+  date: Date
+  type: 'run' | 'walk' | 'cardio' | 'bike' | 'strength'
 }
 
 export function getWorkouts(): Promise<DataListEnvelope<Workout>> {

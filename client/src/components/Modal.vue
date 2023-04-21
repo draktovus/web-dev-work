@@ -8,22 +8,6 @@ const emit = defineEmits<{
   (event: 'close'): void
   (event: 'update:isOpen', value: boolean): void
 }>()
-/**
- * const {title} = defineProps<{
- *  title: string;
- * }>();
- */
-
-/**
- const props2 = defineProps({
-    title2: String,
-});
-*/
-
-/**
- * Data should flow downwards to track changes to data.
- *
- */
 </script>
 
 <template>
@@ -39,7 +23,6 @@ const emit = defineEmits<{
       <section class="modal-card-body">
         <!-- Content ... -->
         <slot></slot>
-        {{ props.title }}
       </section>
       <footer class="modal-card-foot">
         <slot name="footer">

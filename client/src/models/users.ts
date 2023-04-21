@@ -18,7 +18,6 @@ import type { DataEnvelope, DataListEnvelope } from './customFetch'
     }
  */
 export interface User {
-  [key: number]: number
   id: number
   name: string
   firstName: string

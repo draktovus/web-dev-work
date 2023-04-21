@@ -5,11 +5,11 @@ const router = express.Router();
 router
   .get("/", (req, res, next) => {
     model
-      .getWorkouts()
+      .getAll(+req.query.page, +req.query.pageSize)
       .then((list) => {
         const data = {
-          data: list,
-          total: list.length,
+          data: list.items,
+          total: list.total,
           isSuccess: true,
         };
         res.send(data);
@@ -19,13 +19,12 @@ router
 
   .get("/search/:q", (req, res, next) => {
     const term = req.params.q;
-    console.log(term);
     model
-      .searchWorkout(term)
+      .search(term)
       .then((list) => {
         const data = {
-          data: list,
-          total: list.length,
+          data: list.items,
+          total: list.total,
           isSuccess: true,
         };
 
@@ -37,11 +36,12 @@ router
   .get("/:id", (req, res, next) => {
     const id = +req.params.id;
     model
-      .getWorkoutsByUserId(id)
+      .getById(id)
+      //.getById(id, +req.query.page, +req.query.pageSize)
       .then((list) => {
         const data = {
-          data: list,
-          total: list.length,
+          data: list.items,
+          total: list.total,
           isSuccess: true,
         };
         res.send(data);
@@ -51,26 +51,30 @@ router
 
   .post("/", (req, res, next) => {
     const workout = req.body;
-    model
-      .addWorkout(workout)
-      .then((item) => {
-        const data = {
-          data: item,
-          total: 1,
-          isSuccess: true,
-        };
-        res.send(data);
-      })
-      .catch(next);
+    if (workout.userID <= 0) {
+      next(new Error("Invalid userID."));
+    } else {
+      model
+        .add(workout)
+        .then((item) => {
+          const data = {
+            data: item,
+            total: 1,
+            isSuccess: true,
+          };
+          res.send(data);
+        })
+        .catch(next);
+    }
   })
 
   .patch("/:id", (req, res, next) => {
     const workout = req.body;
     model
-      .updateWorkout(workout)
+      .update(workout)
       .then((result) => {
         const data = {
-          data: workout,
+          data: result,
           total: 1,
           isSuccess: true,
         };
@@ -82,10 +86,10 @@ router
   .delete("/:id", (req, res, next) => {
     const id = +req.params.id;
     model
-      .deleteWorkout(id)
+      .deleteItem(req.body._id)
       .then((result) => {
         const data = {
-          data: id,
+          data: result,
           total: 1,
           isSuccess: true,
         };

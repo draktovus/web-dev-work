@@ -2,20 +2,16 @@
 import { getDistanceUnit, getPaceUnit } from '@/models/measurement'
 import { useSession } from '@/models/session'
 import { getWorkoutsByUserId, type Workout } from '@/models/workout'
-import { calcStats } from '@/models/statistics'
+import { calcStats, useStats } from '@/models/statistics'
 import { ref } from 'vue'
 import { getBiometricById, type Biometric } from '@/models/biometrics'
 
-//const data = useStats()
 const session = useSession()
 
-const data = ref<Workout[]>([])
 getWorkoutsByUserId(session.user ? session.user.id : 0).then((res) => {
-  res.data.forEach((w) => {
-    data.value.push(w)
-  })
+  calcStats(res.data)
 })
-const stats = calcStats(data.value)
+const stats = useStats()
 
 const biometrics = ref<Biometric>({} as Biometric)
 getBiometricById(session.user ? session.user.id : 0).then((res) => {
@@ -50,7 +46,7 @@ getBiometricById(session.user ? session.user.id : 0).then((res) => {
       </div>
     </div>
     <div class="column is-half">
-      <div v-for="(item, index) in stats" class="box" :key="item.calories">
+      <div v-for="(item, index) in stats" class="box">
         <h1 class="title is-4 has-text-centered">{{ index }}</h1>
         <div class="columns is-multiline">
           <div class="column is-half">

@@ -3,6 +3,7 @@ import { RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue'
 //import axios from 'axios'
 import TheFooter from './components/TheFooter.vue'
+import GeneralModal from './components/GeneralModal.vue';
 
 /*async function apiRequest(){
   try {

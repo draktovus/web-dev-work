@@ -48,3 +48,19 @@ export function displayDistanceOfWorkout(workout: Workout) {
     return convertMetricToImperial(workout.distance)
   }
 }
+
+export function displayDistance(number: number, type: 'imperial' | 'metric') {
+  if (type == 'imperial') {
+    if (measurementSystem.value == 'imperial') {
+      return number.toFixed(2)
+    } else {
+      return convertImperialToMetric(number).toFixed(2)
+    }
+  } else {
+    if (measurementSystem.value == 'metric') {
+      return number.toFixed(2)
+    } else {
+      return convertMetricToImperial(number).toFixed(2)
+    }
+  }
+}

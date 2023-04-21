@@ -1,13 +1,22 @@
 <script setup lang="ts">
 import { displayDistanceOfWorkout, getDistanceUnit } from '@/models/measurement'
+import { useSession } from '@/models/session'
 import { getUser, type User } from '@/models/users'
 import type { Workout } from '@/models/workout'
 import { ref } from 'vue'
-const props = defineProps<{
-  workout: Workout
-}>()
-const distance = ref(0)
+
+const session = useSession()
 const user = ref<User>({} as User)
+
+const props = defineProps<{
+  workout: Workout,
+  isDeleteActive: boolean
+}>()
+
+const emit = defineEmits<{
+  (event: 'delete'): void
+}>()
+
 getUser(props.workout.userID).then((res) => {
   user.value = res.data
 })
@@ -65,7 +74,13 @@ getUser(props.workout.userID).then((res) => {
       </nav>
     </div>
     <div class="media-right">
-      <button class="delete"></button>
+      <slot name="delete">
+        <button
+          class="delete"
+          v-if="isDeleteActive && session.user && session.user.id == user.id"
+          @click="emit('delete')"
+        ></button>
+      </slot>
     </div>
   </article>
 </template>

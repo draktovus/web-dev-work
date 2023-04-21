@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { reactive } from 'vue'
-import type { Workout } from '@/models/workout'
+import type { WorkoutForm } from '@/models/workout'
 import { useSession } from '@/models/session'
 
 const session = useSession()
@@ -9,21 +9,49 @@ defineProps<{
   isModalActive: boolean
 }>()
 
-const formInfo = reactive({
+/*
+_id?: string | undefined;
+    userID: number;
+    title: string;
+    content: string;
+    picture: string;
+    distance: number;
+    distanceUnit: "miles" | 'kilometers';
+    duration: number;
+    durationUnit: 'minutes' | 'hours' | 'seconds';
+    location: string;
+    date: string;
+    type: 'run' | 'walk' | 'cardio' | 'bike' | 'strength';
+*/
+const formInfo = reactive<WorkoutForm>({
+  userID: session.user ? session.user.id : -1,
+  title: '',
+  content: '',
+  picture: '',
+  distance: 0,
+  distanceUnit: 'miles',
+  duration: 0,
+  durationUnit: 'minutes',
+  location: '',
+  date: '',
+  type: 'run',
+} as WorkoutForm)
+
+/**reactive({
   form: {
     userID: session.user?.id,
-    content: '',
-    title: '',
+    content: '' as string,
+    title: '' as string,
     date: '',
-    duration: 0,
-    durationUnit: 'minutes',
-    distance: 0,
-    distanceUnit: 'Miles',
-    location: '',
-    picture: '',
-    type: ''
+    duration: 0 as number,
+    durationUnit: 'minutes' as 'minutes' | 'hours' | 'seconds',
+    distance: 0 as number,
+    distanceUnit: 'miles' as 'miles' | 'kilometers',
+    location: '' as string,
+    picture: '' as string,
+    type: '' as string
   } as Workout
-})
+})*/
 </script>
 
 <template>
@@ -43,7 +71,7 @@ const formInfo = reactive({
           <div class="field-body">
             <div class="field">
               <div class="control is-expanded">
-                <input type="text" class="input" v-model="formInfo.form.title" />
+                <input type="text" class="input" v-model="formInfo.title" />
               </div>
             </div>
           </div>
@@ -56,7 +84,7 @@ const formInfo = reactive({
           <div class="field-body">
             <div class="field">
               <div class="control is-expanded">
-                <input type="text" class="input" v-model="formInfo.form.content" />
+                <input type="text" class="input" v-model="formInfo.content" />
               </div>
             </div>
           </div>
@@ -69,7 +97,7 @@ const formInfo = reactive({
           <div class="field-body">
             <div class="field">
               <div class="control is-expanded">
-                <input type="date" class="input" v-model="formInfo.form.date" />
+                <input type="date" class="input" v-model="formInfo.date" />
               </div>
             </div>
           </div>
@@ -82,13 +110,13 @@ const formInfo = reactive({
           <div class="field-body">
             <div class="field">
               <p class="control is-expanded">
-                <input type="number" class="input" v-model="formInfo.form.distance" />
+                <input type="number" class="input" v-model="formInfo.distance" />
               </p>
             </div>
             <div class="field">
               <div class="control is-expanded">
                 <div class="select is-fullwidth">
-                  <select v-model="formInfo.form.distanceUnit">
+                  <select v-model="formInfo.distanceUnit">
                     <option value="miles">Miles</option>
                     <option value="kilometers">Kilometers</option>
                   </select>
@@ -105,13 +133,13 @@ const formInfo = reactive({
           <div class="field-body">
             <div class="field is-expanded">
               <div class="control">
-                <input type="number" class="input" v-model="formInfo.form.duration" />
+                <input type="number" class="input" v-model="formInfo.duration" />
               </div>
             </div>
             <div class="field">
               <div class="control is-expanded">
                 <div class="select is-fullwidth">
-                  <select v-model="formInfo.form.durationUnit">
+                  <select v-model="formInfo.durationUnit">
                     <option value="hours">Hours</option>
                     <option value="minutes">Minutes</option>
                     <option value="seconds">Seconds</option>
@@ -129,7 +157,7 @@ const formInfo = reactive({
           <div class="field-body">
             <div class="field">
               <div class="control">
-                <input type="text" class="input" v-model="formInfo.form.location" />
+                <input type="text" class="input" v-model="formInfo.location" />
               </div>
             </div>
           </div>
@@ -142,7 +170,7 @@ const formInfo = reactive({
           <div class="field-body">
             <div class="field">
               <div class="control">
-                <input type="text" class="input" v-model="formInfo.form.picture" />
+                <input type="text" class="input" v-model="formInfo.picture" />
               </div>
             </div>
           </div>
@@ -156,7 +184,7 @@ const formInfo = reactive({
             <div class="field">
               <div class="control">
                 <div class="select">
-                  <select v-model="formInfo.form.type">
+                  <select v-model="formInfo.type">
                     <option value="run">Run</option>
                     <option value="walk">Walk</option>
                     <option value="bike">Bike</option>
@@ -170,9 +198,7 @@ const formInfo = reactive({
         </div>
       </section>
       <footer class="modal-card-foot">
-        <button class="button is-success" @click="$emit('submit', formInfo.form)">
-          Save changes
-        </button>
+        <button class="button is-success" @click="$emit('submit', formInfo)">Save changes</button>
         <button class="button" @click="$emit('toggle', 'add')" aria-label="close">Cancel</button>
       </footer>
     </div>
