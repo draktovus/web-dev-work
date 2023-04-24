@@ -1,44 +1,94 @@
-const data = require('../data/users.json');
+const data = require("../data/users.json");
+const { connect, ObjectId } = require("./mongo");
 
-function getUsers(){
-    return data.users;
+const COLLECTION_NAME = "users";
+
+async function collection() {
+  const db = await connect();
+  return db.collection(COLLECTION_NAME);
 }
 
-function getUserById(id){
-    return data.users.find(user => user.id === id);
+async function getAll(page = 1, pageSize = 30) {
+  const col = await collection();
+  const items = await col
+    .find()
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .toArray();
+  const total = await col.countDocuments();
+  return { items, total };
 }
 
-function getUserByName(name){
-    return data.users.find(user => user.name === name);
+async function getById(id) {
+  const col = await collection();
+  const item = await col
+    .findOne({ id: id })
+  const total = await col.countDocuments({ id: id });
+  return item;
 }
 
-function addUser(user){
-    user.id = data.users.length + 1;
-    data.users.push(product);
+async function getByName(name){
+  const col = await collection();
+  const item = await col
+  .findOne({name:name})
+  return item;
 }
 
-function updateUser(user){
-    const index = data.users.findIndex(u => u.id === user.id);
-    data.users[index] = user;
+async function add(item) {
+  const col = await collection();
+  const result = await col.insertOne(item);
+
+  item._id = result.insertedId;
+  return result;
 }
 
-function deleteUser(user){
-    const index = data.users.findIndex(u => u.id === user.id);
-    data.users.splice(index, 1);
+async function update(item) {
+  const col = await collection();
+  const result = await col.findOneAndUpdate(
+    { _id: item._id },
+    { $set: item },
+    { returnDocument: "after" }
+  );
+  return result.value;
+}
+
+async function deleteItem(id) {
+  const col = await collection();
+  const result = await col.deleteOne({ _id: id});
+  return result.deletedCount;
 }
 
 //search function for product in json
-function searchUser(searchTerm){
-    const users = data.users.filter(user => user.name.toLowerCase().includes(searchTerm.toLowerCase()));
-    return users;
+async function search(searchTerm, page = 1, pageSize = 30) {
+  const col = await collection();
+  // option 'i' is case insensitive
+  const query = {
+    $or: [
+      { name: { $regex: searchTerm, $options: "i" } },
+    ],
+  };
+  const items = await col
+    .find(query)
+    .skip((page - 1) * pageSize)
+    .limit(pageSize)
+    .toArray();
+  const total = await col.countDocuments(query);
+  return { items, total };
+}
+
+async function seed() {
+  const col = await collection();
+  const result = await col.insertMany(data.users);
+  return result.insertedCount;
 }
 
 module.exports = {
-    getUsers,
-    getUserById,
-    getUserByName,
-    addUser,
-    updateUser,
-    deleteUser,
-    searchUser,
-}
+  getAll,
+  getById,
+  getByName,
+  add,
+  update,
+  deleteItem,
+  search,
+  seed,
+};

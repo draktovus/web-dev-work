@@ -15,7 +15,33 @@ const stats = useStats()
 
 const biometrics = ref<Biometric>({} as Biometric)
 getBiometricById(session.user ? session.user.id : 0).then((res) => {
-  biometrics.value = res.data
+  if (res.data == null) {
+    biometrics.value = {
+      "_id": "a1337",
+      "userId": 1,
+      "height": 50,
+      "heightUnit": "metric",
+      "weight": 10,
+      "weightUnit": "kg",
+      "gender": "male",
+      "dateOfBirth": "2000-01-01"
+    }
+  }else{
+    biometrics.value = res.data
+  }
+}).catch(err=>{
+  console.log(err)
+  // placeholder data
+  biometrics.value = {
+    "_id": "a1337",
+    "userId": 1,
+    "height": 50,
+    "heightUnit": "metric",
+    "weight": 10,
+    "weightUnit": "kg",
+    "gender": "male",
+    "dateOfBirth": "2000-01-01"
+  }
 })
 </script>
 

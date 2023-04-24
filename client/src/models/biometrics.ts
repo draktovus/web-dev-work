@@ -3,18 +3,18 @@ import { api } from './session'
 
 /**
  * {
-        "key": 1,
-        "userId": 1,
-        "height": 160,
-        "heightUnit": "metric",
-        "weight": 70,
-        "weightUnit": "kg",
-        "gender": "male",
-        "dateOfBirth": "2001-03-30"
-    }
+    "key": 1,
+    "userId": 1,
+    "height": 160,
+    "heightUnit": "metric",
+    "weight": 70,
+    "weightUnit": "kg",
+    "gender": "male",
+    "dateOfBirth": "2001-03-30"
+  }
  */
 export interface Biometric {
-  key: number
+  _id:string
   userId: number
   height: number
   heightUnit: string
