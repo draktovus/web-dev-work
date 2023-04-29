@@ -1,11 +1,14 @@
-//create nodejs express server
+require('dotenv').config()
+
 const http = require('http')
 const path = require('path')
 const express = require('express');
-const app = express();
 const users = require('./controllers/users')
 const workouts = require('./controllers/workouts')
 const biometrics = require('./controllers/biometrics')
+const { requireLogin, parseAuthorizationHeader } = require('./middleware/authorization')
+const app = express();
+
 
 // 127.0.0.1 is the loopback address
 const hostname = '127.0.0.1';
@@ -17,19 +20,20 @@ app
     .use(express.static(path.join(__dirname, '../client/dist')))
     .use((req, res, next) => {
         res.header('Access-Control-Allow-Origin', '*')
-        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+        res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
         next()
     })
+    .use(parseAuthorizationHeader())
 
 // Actions
 app
-    .get('/', (req, res) => {
-        res.send("Exercise Mania")
+    .get('/api/v1/', (req, res) => {
+        res.send("Hello, this is exercise maniac!")
     })
+    .use('/api/v1/workouts', requireLogin(true), workouts)
+    .use('/api/v1/biometrics', requireLogin(true), biometrics)
     .use('/api/v1/users', users)
-    .use('/api/v1/workouts', workouts)
-    .use('/api/v1/biometrics', biometrics)
 
 // Catch all (called deep linking)
 app.get('*', (req,res) => {

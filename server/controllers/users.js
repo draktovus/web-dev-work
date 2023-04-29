@@ -1,9 +1,11 @@
 const express = require("express");
 const model = require("../models/users");
 const router = express.Router();
+const { requireLogin } = require('../middleware/authorization');
+
 
 router
-  .get("/", (req, res, next) => {
+  .get("/", requireLogin(true), (req, res, next) => {
     model
       .getAll(+req.query.page, +req.query.pageSize)
       .then((list) => {
@@ -17,7 +19,7 @@ router
       .catch(next);
   })
 
-  .get("/search/:q", (req, res, next) => {
+  .get("/search/:q", requireLogin(true), (req, res, next) => {
     const term = req.params.q;
     model
       .search(term)
@@ -33,7 +35,7 @@ router
       .catch(next);
   })
 
-  .get("/:id", (req, res, next) => {
+  .get("/:id", requireLogin(true), (req, res, next) => {
     const id = +req.params.id;
     model
       .getById(id)
@@ -49,29 +51,16 @@ router
   })
 
   .post("/login", (req, res, next) => {
-    const user = req.body;
-    model.getByName(user.name).then(
-      (userServer)=>{
-        if (userServer !== undefined) {
-          if (userServer.password === user.password) {
-            const data = {
-              data: userServer,
-              total: 1,
-              isSuccess: true,
-            };
-            res.send(data);
-            return;
-          }
-          next(new Error("Username or password didnt match."));
-        } else {
-          next(new Error("Bad login"));
-        }
+    model.login(req.body.name, req.body.password).then(response=>{
+      const data = {
+        data: response,
+        isSuccess: true
       }
-    )
-    .catch(next)
+      res.send(data)
+    })
   })
 
-  .post("/", (req, res, next) => {
+  .post("/", requireLogin(true), (req, res, next) => {
     const user = req.body;
     model
       .add(user)
@@ -86,7 +75,7 @@ router
       .catch(next);
   })
 
-  .patch("/:id", (req, res, next) => {
+  .patch("/:id", requireLogin(true), (req, res, next) => {
     const user = req.body;
     model
       .update(user)
@@ -101,7 +90,7 @@ router
       .catch(next);
   })
 
-  .delete("/:id", (req, res, next) => {
+  .delete("/:id", requireLogin(true), (req, res, next) => {
     const id = +req.params.id;
     model
       .deleteItem(req.body._id)
@@ -116,7 +105,7 @@ router
       .catch(next);
   })
 
-  .post('/seed', (req,res,next)=>{
+  .post('/seed', requireLogin(true), (req,res,next)=>{
     model.seed().then(inserted=>{
       model.getAll().then(list=>{
         const data = {
@@ -129,4 +118,9 @@ router
     })
     .catch(next)
   })
+
+  .post('/oAuthLogin', (req, res, next) => {
+    model.oAuthLogin(req.body.provider, req.body.accessToken)
+    .catch(next)
+})
 module.exports = router;
