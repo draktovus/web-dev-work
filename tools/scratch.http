@@ -20,5 +20,5 @@ Content-Type: application/json
 Authorization: Bearer {{jwt}}
 
 ###
-GET http://localhost:{{port}}/api/v1/workouts
+GET http://localhost:{{port}}/api/v1/workouts/1
 Authorization: Bearer {{jwt}}

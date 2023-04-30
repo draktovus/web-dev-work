@@ -35,15 +35,18 @@ function calculateDistance(array: Array<Workout>) {
 }
 const todayDistance = computed(() => {
   const distanceImperial = calculateDistance(todayWorkouts.value)
-  return distanceImperial.toFixed(2)
+  return displayDistance(distanceImperial, 'imperial')
+  
 })
 const weekDistance = computed(() => {
   const distanceImperial = calculateDistance(weekWorkouts.value)
-  return distanceImperial.toFixed(2)
+  return displayDistance(distanceImperial, 'imperial')
+
 })
 const AllTimeStatsDistance = computed(() => {
   const distanceImperial = calculateDistance(userWorkouts.value)
-  return distanceImperial.toFixed(2)
+  return displayDistance(distanceImperial, 'imperial')
+
 })
 
 // DURATION STATS
@@ -178,7 +181,6 @@ export function calcStats(UserWorkouts: Workout[]) {
 
   userWorkouts.value = UserWorkouts
   console.log(today.toUTCString())
-  console.log('WEEKLY')
   weekWorkouts.value = userWorkouts.value.filter((e) => {
     const date = new Date(e.date)
     console.log(e.title)
@@ -194,7 +196,6 @@ export function calcStats(UserWorkouts: Workout[]) {
       today.getUTCFullYear() == date.getUTCFullYear()
     )
   })
-  console.log('DAILY')
   todayWorkouts.value = userWorkouts.value.filter((e) => {
     const date = new Date(e.date)
     console.log(e.title)

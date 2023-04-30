@@ -21,12 +21,17 @@ export function useSession() {
 export function useLogin() {
   const router = useRouter()
 
-  return function (user: any) {
-    api('users/login', { name: user.name, password: user.password }, 'POST').then((res) => {
-      if (res.isSuccess) {
-        session.user = res.data
-      }
-    })
+  return async function (user: any) {
+    console.log({user})
+    const response = await api('users/login', { name: user.name, password: user.password }, 'POST');
+
+    session.user = response.data.user
+    if (!session.user){
+      addMessage("User was not found", 'danger')
+      return
+    }
+    session.user.token = response.data.token
+
     router.push(session.redirectUrl ?? '/')
     session.redirectUrl = null
   }
@@ -45,6 +50,13 @@ export function useLogout() {
 // API
 export function api(url: string, data?: any, method?: string, headers?: any) {
   session.isLoading = true
+
+  if (session.user?.token) {
+    headers = {
+      ...headers,
+      "Authorization": `Bearer ${session.user?.token}`
+    }
+  }
   return customFetch
     .api(url, data, method, headers)
     .catch((err) => {

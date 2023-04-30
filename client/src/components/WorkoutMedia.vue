@@ -10,7 +10,7 @@ const user = ref<User>({} as User)
 
 const props = defineProps<{
   workout: Workout,
-  isDeleteActive: boolean
+  isDeleteActive?: boolean
 }>()
 
 const emit = defineEmits<{

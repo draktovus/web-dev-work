@@ -22,6 +22,11 @@ app
         res.header('Access-Control-Allow-Origin', '*')
         res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization')
         res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, PATCH, DELETE, OPTIONS')
+        // Make sure OPTIONS request are always allowed
+        // That way pre-flight requests don't fail
+        if(req.method === 'OPTIONS') {
+            return res.status(200).send({})
+        }
         next()
     })
     .use(parseAuthorizationHeader())
