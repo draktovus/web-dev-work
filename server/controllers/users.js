@@ -58,6 +58,7 @@ router
       }
       res.send(data)
     })
+    .catch(next)
   })
 
   .post("/", requireLogin(true), (req, res, next) => {
