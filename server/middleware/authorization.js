@@ -20,7 +20,6 @@ module.exports = {
     requireLogin(requiresAdmin = false) {
         return (req, res, next) => {
             if (req.user) {
-                console.log(requiresAdmin && !(req.user.isAdmin))
                 if (requiresAdmin && !(req.user.isAdmin)) {
                     next({
                         code: 403,
