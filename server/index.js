@@ -36,8 +36,8 @@ app
     .get('/api/v1/', (req, res) => {
         res.send("Hello, this is exercise maniac!")
     })
-    .use('/api/v1/workouts', requireLogin(true), workouts)
-    .use('/api/v1/biometrics', requireLogin(true), biometrics)
+    .use('/api/v1/workouts', requireLogin(), workouts)
+    .use('/api/v1/biometrics', requireLogin(), biometrics)
     .use('/api/v1/users', users)
 
 // Catch all (called deep linking)

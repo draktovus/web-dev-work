@@ -96,6 +96,22 @@ function cancel() {
         </div>
       </div>
 
+      <div class="field">
+        <label class="label">Is Admin</label>
+        <div class="field is-grouped">
+          <div class="control">
+            <label class="radio button">
+              <input type="radio" name="admin" v-model="user.isAdmin" :value="true">
+              True
+            </label>
+            <label class="radio button">
+              <input type="radio" name="admin" v-model="user.isAdmin" :value="false">
+              False
+            </label>
+          </div>
+        </div>
+      </div>
+
       <div class="field is-grouped">
         <div class="control">
           <button class="button is-link" @click="save">Submit</button>
@@ -104,6 +120,7 @@ function cancel() {
           <button class="button is-link is-light" @click="cancel">Cancel</button>
         </div>
       </div>
+      
     </form>
   </div>
 </template>
