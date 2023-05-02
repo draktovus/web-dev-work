@@ -18,8 +18,7 @@ import { api } from './session'
 */
 export interface Workout {
   _id:string
-  id:string
-  userID: number
+  userID: string
   title: string
   content: string
   picture: string
@@ -34,7 +33,7 @@ export interface Workout {
 
 export type WorkoutForm = {
   _id:string
-  userID:number
+  userID: string
   title: string
   content: string
   picture: string
@@ -51,6 +50,6 @@ export function getWorkouts(): Promise<DataListEnvelope<Workout>> {
   return api('workouts')
 }
 
-export function getWorkoutsByUserId(id: number): Promise<DataListEnvelope<Workout>> {
+export function getWorkoutsByUserId(id: string): Promise<DataListEnvelope<Workout>> {
   return api('workouts/' + id)
 }

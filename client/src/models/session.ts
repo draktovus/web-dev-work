@@ -38,7 +38,7 @@ export function useLogin() {
 export function useLogout() {
   const router = useRouter()
   return function () {
-    console.log({ router })
+    //console.log({ router })
 
     session.user = null
 

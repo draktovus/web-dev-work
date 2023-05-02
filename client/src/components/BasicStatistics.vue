@@ -8,7 +8,7 @@ import { getBiometricById, type Biometric } from '@/models/biometrics'
 
 const session = useSession()
 
-getWorkoutsByUserId(session.user ? session.user.id : 0).then((res) => {
+getWorkoutsByUserId(session.user ? session.user._id : '').then((res) => {
   calcStats(res.data)
 })
 const stats = useStats()
@@ -17,7 +17,6 @@ const biometrics = ref<Biometric>({} as Biometric)
 getBiometricById(session.user ? session.user.id : 0).then((res) => {
   if (res.data == null) {
     biometrics.value = {
-      "_id": "a1337",
       "userId": 1,
       "height": 50,
       "heightUnit": "metric",
@@ -25,7 +24,7 @@ getBiometricById(session.user ? session.user.id : 0).then((res) => {
       "weightUnit": "kg",
       "gender": "male",
       "dateOfBirth": "2000-01-01"
-    }
+    } as Biometric
   }else{
     biometrics.value = res.data
   }
@@ -33,7 +32,6 @@ getBiometricById(session.user ? session.user.id : 0).then((res) => {
   console.log(err)
   // placeholder data
   biometrics.value = {
-    "_id": "a1337",
     "userId": 1,
     "height": 50,
     "heightUnit": "metric",
@@ -41,7 +39,7 @@ getBiometricById(session.user ? session.user.id : 0).then((res) => {
     "weightUnit": "kg",
     "gender": "male",
     "dateOfBirth": "2000-01-01"
-  }
+  } as Biometric
 })
 </script>
 

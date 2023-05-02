@@ -2,17 +2,17 @@
 import { RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue'
 import TheFooter from './components/TheFooter.vue'
-import GeneralModal from './components/GeneralModal.vue';
 
 </script>
 
 <template>
   <NavBar />
   <div class="section mt-5">
-    <transition name="fade" mode="out-in">
-      <RouterView />
-    </transition>
-    
+    <RouterView v-slot="{ Component }">
+      <transition name="fade" mode="out-in">
+        <component :is="Component"></component>
+      </transition>
+    </RouterView>
   </div>
   <TheFooter />
 </template>

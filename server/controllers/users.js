@@ -1,10 +1,24 @@
 const express = require("express");
 const model = require("../models/users");
 const router = express.Router();
-const { requireLogin } = require('../middleware/authorization');
-
+const { requireLogin } = require("../middleware/authorization");
 
 router
+  .get("/:id", requireLogin(true), (req, res, next) => {
+    const id = req.params.id;
+    model
+      .getById(id)
+      .then((list) => {
+        const data = {
+          data: list,
+          total: 1,
+          isSuccess: true,
+        };
+        res.send(data);
+      })
+      .catch(next);
+  })
+
   .get("/", requireLogin(true), (req, res, next) => {
     model
       .getAll(+req.query.page, +req.query.pageSize)
@@ -35,14 +49,12 @@ router
       .catch(next);
   })
 
-  .get("/:id", requireLogin(true), (req, res, next) => {
-    const id = +req.params.id;
+  .post("/login", (req, res, next) => {
     model
-      .getById(id)
-      .then((list) => {
+      .login(req.body.name, req.body.password)
+      .then((response) => {
         const data = {
-          data: list,
-          total: 1,
+          data: response,
           isSuccess: true,
         };
         res.send(data);
@@ -50,19 +62,9 @@ router
       .catch(next);
   })
 
-  .post("/login", (req, res, next) => {
-    model.login(req.body.name, req.body.password).then(response=>{
-      const data = {
-        data: response,
-        isSuccess: true
-      }
-      res.send(data)
-    })
-    .catch(next)
-  })
-
-  .post("/", requireLogin(true), (req, res, next) => {
+  .post("/add", requireLogin(true), (req, res, next) => {
     const user = req.body;
+    console.log(user);
     model
       .add(user)
       .then((item) => {
@@ -71,6 +73,8 @@ router
           total: 1,
           isSuccess: true,
         };
+        console.log(data);
+
         res.send(data);
       })
       .catch(next);
@@ -91,8 +95,7 @@ router
       .catch(next);
   })
 
-  .delete("/:id", requireLogin(true), (req, res, next) => {
-    const id = +req.params.id;
+  .delete("/", requireLogin(true), (req, res, next) => {
     model
       .deleteItem(req.body._id)
       .then((result) => {
@@ -106,22 +109,23 @@ router
       .catch(next);
   })
 
-  .post('/seed', requireLogin(true), (req,res,next)=>{
-    model.seed().then(inserted=>{
-      model.getAll().then(list=>{
-        const data = {
-          data: list.items,
-          total: inserted,
-          isSuccess: true,
-        }
-        res.send(data);
+  .post("/seed", requireLogin(true), (req, res, next) => {
+    model
+      .seed()
+      .then((inserted) => {
+        model.getAll().then((list) => {
+          const data = {
+            data: list.items,
+            total: inserted,
+            isSuccess: true,
+          };
+          res.send(data);
+        });
       })
-    })
-    .catch(next)
+      .catch(next);
   })
 
-  .post('/oAuthLogin', (req, res, next) => {
-    model.oAuthLogin(req.body.provider, req.body.accessToken)
-    .catch(next)
-})
+  .post("/oAuthLogin", (req, res, next) => {
+    model.oAuthLogin(req.body.provider, req.body.accessToken).catch(next);
+  });
 module.exports = router;

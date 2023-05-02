@@ -41,6 +41,9 @@ async function add(item) {
 
 async function update(item) {
   const col = await collection();
+  const objID = new ObjectId(item._id)
+  delete item._id
+  item._id = objID
   const result = await col.findOneAndUpdate(
     { _id: item._id },
     { $set: item },
@@ -51,6 +54,8 @@ async function update(item) {
 
 async function deleteItem(id) {
   const col = await collection();
+  const objID = new ObjectId(id)
+  id = objID
   const result = await col.deleteOne({ _id: id});
   return result.deletedCount;
 }

@@ -8,12 +8,13 @@ import { useSession } from '@/models/session'
 
 const session = useSession()
 
-getWorkoutsByUserId(session.user ? session.user.id : 0).then((res) => {
-  calcStats(res.data)
-})
-
 onMounted(() => {
-  initChart()
+  getWorkoutsByUserId(session.user ? session.user._id : '').then((res) => {
+    console.log(res.data)
+    calcStats(res.data)
+  }).then(()=>{
+    initChart()
+  })
 })
 
 const graphDiv = ref<HTMLElement | null>(null)

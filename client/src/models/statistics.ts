@@ -182,16 +182,16 @@ export function calcStats(UserWorkouts: Workout[]) {
   const today = new Date()
 
   userWorkouts.value = UserWorkouts
-  console.log(today.toUTCString())
+  //console.log(today.toUTCString())
   weekWorkouts.value = userWorkouts.value.filter((e) => {
     const date = new Date(e.date)
-    console.log(e.title)
-    console.log(date.toUTCString())
-    console.log(
-      today.getUTCDate() - date.getUTCDate() <= 7 &&
-        today.getUTCMonth() == date.getUTCMonth() &&
-        today.getUTCFullYear() == date.getUTCFullYear()
-    )
+    //console.log(e.title)
+    //console.log(date.toUTCString())
+    //console.log(
+    //  today.getUTCDate() - date.getUTCDate() <= 7 &&
+    //    today.getUTCMonth() == date.getUTCMonth() &&
+    //    today.getUTCFullYear() == date.getUTCFullYear()
+    //)
     return (
       today.getUTCDate() - date.getUTCDate() <= 7 &&
       today.getUTCMonth() == date.getUTCMonth() &&
@@ -200,9 +200,9 @@ export function calcStats(UserWorkouts: Workout[]) {
   })
   todayWorkouts.value = userWorkouts.value.filter((e) => {
     const date = new Date(e.date)
-    console.log(e.title)
-    console.log(date.toUTCString())
-    console.log(today.getDate() - date.getDate())
+    //console.log(e.title)
+    //console.log(date.toUTCString())
+    //console.log(today.getDate() - date.getDate())
     return (
       today.getUTCDate() - date.getUTCDate() == 0 &&
       today.getUTCMonth() == date.getUTCMonth() &&
@@ -210,9 +210,9 @@ export function calcStats(UserWorkouts: Workout[]) {
     )
   })
 
-  console.log('All Time: ', userWorkouts, '\nWeekly: ', { weekWorkouts }, '\nToday: ', {
-    todayWorkouts
-  })
+  // console.log('All Time: ', userWorkouts, '\nWeekly: ', { weekWorkouts }, '\nToday: ', {
+  //   todayWorkouts
+  // })
 }
 
 // Assumes month is 1-12, not 0-11 like javascript.

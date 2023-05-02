@@ -24,9 +24,10 @@ async function getAll(page = 1, pageSize = 30) {
 
 async function getById(id) {
   const col = await collection();
+  const objID = new ObjectId(id)
+  id = objID
   const item = await col
-    .findOne({ id: id })
-  const total = await col.countDocuments({ id: id });
+    .findOne({ _id: id })
   return item;
 }
 
@@ -39,6 +40,7 @@ async function getByName(name){
 
 async function add(item) {
   const col = await collection();
+  delete item._id
   const result = await col.insertOne(item);
 
   item._id = result.insertedId;
@@ -47,6 +49,9 @@ async function add(item) {
 
 async function update(item) {
   const col = await collection();
+  const objID = new ObjectId(item._id)
+  delete item._id
+  item._id = objID
   const result = await col.findOneAndUpdate(
     { _id: item._id },
     { $set: item },
@@ -57,6 +62,8 @@ async function update(item) {
 
 async function deleteItem(id) {
   const col = await collection();
+  const objID = new ObjectId(id)
+  id = objID
   const result = await col.deleteOne({ _id: id});
   return result.deletedCount;
 }

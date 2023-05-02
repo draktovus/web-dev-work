@@ -18,6 +18,7 @@ import type { DataEnvelope, DataListEnvelope } from './customFetch'
     }
  */
 export interface User {
+  _id: string
   id: number
   name: string
   firstName: string
@@ -34,10 +35,18 @@ export function getUsers(): Promise<DataListEnvelope<User>> {
   return api('users')
 }
 
-export function getUser(id: number): Promise<DataEnvelope<User>> {
+export function getUser(id: string): Promise<DataEnvelope<User>> {
   return api(`users/${id}`)
 }
 
-export function updateUser(user: User) {
+export function updateUser(user: User): Promise<DataEnvelope<User>> {
   return api('users/update', user, 'PATCH')
+}
+
+export function addUser(user:User): Promise<DataEnvelope<User>>{
+  return api('users/add', user, 'POST')
+}
+
+export function deleteUser(user:User): Promise<DataEnvelope<User>>{
+  return api('users', user, 'DELETE')
 }

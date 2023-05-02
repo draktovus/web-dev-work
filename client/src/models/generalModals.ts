@@ -25,4 +25,7 @@ export function confirm(message: string, title: string) {
     state.resolve = resolve
     state.reject = reject
   })
+  .finally(() => {
+    state.isModalOpen = false;
+});
 }

@@ -31,10 +31,10 @@ getUser(props.workout.userID).then((res) => {
     </figure>
     <div class="media-content">
       <div class="content">
-        <strong class="mr-2">{{ user.firstName }}{{ user.lastName }}</strong>
+        <strong class="mr-2">{{ user.firstName }} {{ user.lastName }}</strong>
         <small class="mr-2">{{ user.handle }}</small>
         <small>
-          {{ workout.date }}
+          {{ new Date(workout.date).toISOString().split('T')[0] }}
         </small>
         <br />
         <h6 class="mt-2">{{ workout.title }}</h6>

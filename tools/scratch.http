@@ -20,5 +20,13 @@ Content-Type: application/json
 Authorization: Bearer {{jwt}}
 
 ###
-GET http://localhost:{{port}}/api/v1/workouts/1
+GET http://localhost:{{port}}/api/v1/workouts/
+Authorization: Bearer {{jwt}}
+
+###
+GET http://localhost:{{port}}/api/v1/workouts/6445c926e29bb06eb074fea2
+Authorization: Bearer {{jwt}}
+
+###
+GET http://localhost:{{port}}/api/v1/workouts/search/march
 Authorization: Bearer {{jwt}}
