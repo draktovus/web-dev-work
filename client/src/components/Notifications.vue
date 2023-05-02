@@ -11,21 +11,25 @@ const isActive = ref(false)
     <button class="button is-dark" @click="isActive = !isActive">
       <span class="icon">
         <i class="fa fa-bell fa-lg" :class="{ 'fa-beat-fade': session.isLoading }" />
-        <span v-if="session.messages.length != 0" class="tag is-danger quantity-tag">{{
-          session.messages.length
-        }}</span>
+        <transition name="fade">
+          <span v-if="session.messages.length != 0" class="tag is-danger quantity-tag">
+            {{ session.messages.length }}
+          </span>
+        </transition>
       </span>
     </button>
-    <div class="notification-list" v-show="isActive">
-      <div
-        v-for="(msg, index) in session.messages"
-        :key="msg.msg"
-        :class="`notification is-light is-${msg.type}`"
-      >
-        <button class="delete" @click="deleteMessage(index)"></button>
-        {{ msg.msg }}
+    <transition name="fade">
+      <div class="notification-list" v-show="isActive">
+          <div
+          v-for="(msg, index) in session.messages"
+          :key="index"
+          :class="`notification is-light is-${msg.type}`"
+        >
+          <button class="delete" @click="deleteMessage(index)"></button>
+          {{ msg.msg }}
+        </div>
       </div>
-    </div>
+    </transition>
   </div>
 </template>
 

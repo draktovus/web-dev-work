@@ -49,7 +49,7 @@ getUser(props.workout.userID).then((res) => {
             <div class="columns">
               <div class="column has-text-centered">
                 <h1 class="title is-size-5">
-                  {{ displayDistanceOfWorkout(workout) }} {{ getDistanceUnit() }}
+                  {{ displayDistanceOfWorkout(workout).toFixed(2) }} {{ getDistanceUnit() }}
                 </h1>
               </div>
               <div class="column has-text-centered">

@@ -32,6 +32,7 @@ async function getById(id) {
 
 async function add(item) {
   const col = await collection();
+  delete item._id
   const result = await col.insertOne(item);
 
   item._id = result.insertedId;

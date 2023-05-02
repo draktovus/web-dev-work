@@ -7,6 +7,7 @@ const allWorkouts = ref<Workout[]>([])
 getWorkouts().then((data) => {
   allWorkouts.value = data.data
 })
+// Get workouts, filter by friends.
 </script>
 
 <template>

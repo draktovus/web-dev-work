@@ -8,7 +8,7 @@ import GeneralModal from './components/GeneralModal.vue';
 
 <template>
   <NavBar />
-  <div class="container mt-5">
+  <div class="section mt-5">
     <transition name="fade" mode="out-in">
       <RouterView />
     </transition>
@@ -20,14 +20,5 @@ import GeneralModal from './components/GeneralModal.vue';
 <style scoped>
 .container {
   min-height: 82vh;
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s;
-}
-
-.fade-enter-from,
-.fade-leave-to {
-  opacity: 0;
 }
 </style>

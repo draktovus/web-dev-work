@@ -1,5 +1,5 @@
 import { computed, reactive, ref } from 'vue'
-import { convertMetricToImperial, displayDistance } from './measurement'
+import { convertMetricToImperial, displayDistance, measurementSystem } from './measurement'
 import type { Workout } from '@/models/workout'
 
 const userWorkouts = ref([] as Workout[])
@@ -24,6 +24,8 @@ const METS = {
 const weight = 81
 
 // DISTANCE STATS
+
+// Returns an imperial distance.
 function calculateDistance(array: Array<Workout>) {
   return array.reduce((totalDistance, item) => {
     if (item.distanceUnit == 'miles') {
@@ -211,4 +213,16 @@ export function calcStats(UserWorkouts: Workout[]) {
   console.log('All Time: ', userWorkouts, '\nWeekly: ', { weekWorkouts }, '\nToday: ', {
     todayWorkouts
   })
+}
+
+// Assumes month is 1-12, not 0-11 like javascript.
+export function getDistancesByMonth(month:number){
+  month = month - 1
+  const workoutsMonth = userWorkouts.value.filter((entry)=>{
+    const date = new Date(entry.date)
+    return (
+      date.getUTCMonth() == month
+      )
+  })
+  return calculateDistance(workoutsMonth)
 }

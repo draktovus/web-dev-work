@@ -22,15 +22,13 @@ export function useLogin() {
   const router = useRouter()
 
   return async function (user: any) {
-    console.log({user})
     const response = await api('users/login', { name: user.name, password: user.password }, 'POST');
-
-    session.user = response.data.user
-    if (!session.user){
-      addMessage("User was not found", 'danger')
+    
+    if (response === undefined){
       return
     }
-    session.user.token = response.data.token
+    session.user = response.data.user
+    session.user!.token = response.data.token
 
     router.push(session.redirectUrl ?? '/')
     session.redirectUrl = null
