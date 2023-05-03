@@ -18,7 +18,8 @@ import TheFooter from './components/TheFooter.vue'
 </template>
 
 <style scoped>
-.container {
-  min-height: 82vh;
+.container, .section {
+  min-height: 75vh;
 }
+
 </style>

@@ -15,7 +15,7 @@ function toggleMenu() {
 </script>
 
 <template>
-  <nav class="navbar is-dark">
+  <nav class="navbar is-dark is-fixed-top">
     <div class="navbar-brand">
       <RouterLink class="navbar-item" to="/">
         <span class="icon-text">

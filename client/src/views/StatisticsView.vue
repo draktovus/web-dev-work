@@ -75,12 +75,17 @@ async function initChart() {
         easing: 'out'
       }
     }
+
+    var pieOptions={
+      title: `Distance by Month (${measurementSystem.value})`,
+      is3D: true,
+    }
     // Instantiate and draw the chart, passing in some options.
     var chart = new google.visualization.ColumnChart(graphDiv.value!)
     var pieChart = new google.visualization.PieChart(pieGraphDiv.value!)
     function drawChart() {
       chart.draw(data, options)
-      pieChart.draw(data, options)
+      pieChart.draw(data, pieOptions)
     }
     watch(measurementSystem, () => {
       console.log('graph should change to ' + measurementSystem.value)
@@ -88,6 +93,7 @@ async function initChart() {
         data.setValue(i, 1, displayDistanceAsNumber(getDistancesByMonth(i + 1), 'imperial'))
       }
       options.vAxis.title = `${measurementSystem.value}`
+      pieOptions.title = `Distance by Month (${measurementSystem.value})`
       data.setColumnLabel(1, `Distance (${measurementSystem.value})`)
       drawChart()
     })
