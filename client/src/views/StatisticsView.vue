@@ -18,6 +18,8 @@ onMounted(() => {
 })
 
 const graphDiv = ref<HTMLElement | null>(null)
+const pieGraphDiv = ref<HTMLElement | null>(null)
+
 async function initChart() {
   await loadScript('https://www.gstatic.com/charts/loader.js', 'google-loader')
 
@@ -75,8 +77,10 @@ async function initChart() {
     }
     // Instantiate and draw the chart, passing in some options.
     var chart = new google.visualization.ColumnChart(graphDiv.value!)
+    var pieChart = new google.visualization.PieChart(pieGraphDiv.value!)
     function drawChart() {
       chart.draw(data, options)
+      pieChart.draw(data, options)
     }
     watch(measurementSystem, () => {
       console.log('graph should change to ' + measurementSystem.value)
@@ -96,12 +100,13 @@ async function initChart() {
   <div class="columns">
     <div class="column">
       <div id="graph" ref="graphDiv"></div>
+      <div id="pieGraph" ref="pieGraphDiv"></div>
     </div>
   </div>
 </template>
 
 <style scoped>
-#graph {
+#graph, #pieGraph {
   height: calc(100vh - 116px);
 }
 </style>
