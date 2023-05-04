@@ -9,12 +9,14 @@ import { useSession } from '@/models/session'
 const session = useSession()
 
 onMounted(() => {
-  getWorkoutsByUserId(session.user ? session.user._id : '').then((res) => {
-    console.log(res.data)
-    calcStats(res.data)
-  }).then(()=>{
-    initChart()
-  })
+  getWorkoutsByUserId(session.user ? session.user._id : '')
+    .then((res) => {
+      console.log(res.data)
+      calcStats(res.data)
+    })
+    .then(() => {
+      initChart()
+    })
 })
 
 const graphDiv = ref<HTMLElement | null>(null)
@@ -76,9 +78,9 @@ async function initChart() {
       }
     }
 
-    var pieOptions={
+    var pieOptions = {
       title: `Distance by Month (${measurementSystem.value})`,
-      is3D: true,
+      is3D: true
     }
     // Instantiate and draw the chart, passing in some options.
     var chart = new google.visualization.ColumnChart(graphDiv.value!)
@@ -112,7 +114,8 @@ async function initChart() {
 </template>
 
 <style scoped>
-#graph, #pieGraph {
+#graph,
+#pieGraph {
   height: calc(100vh - 116px);
 }
 </style>

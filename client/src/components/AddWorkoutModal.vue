@@ -34,7 +34,7 @@ const formInfo = reactive<WorkoutForm>({
   durationUnit: 'minutes',
   location: '',
   date: '',
-  type: 'run',
+  type: 'run'
 } as WorkoutForm)
 
 /**reactive({

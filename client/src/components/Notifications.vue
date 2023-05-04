@@ -20,7 +20,7 @@ const isActive = ref(false)
     </button>
     <transition name="fade">
       <div class="notification-list" v-show="isActive">
-          <div
+        <div
           v-for="(msg, index) in session.messages"
           :key="index"
           :class="`notification is-light is-${msg.type}`"

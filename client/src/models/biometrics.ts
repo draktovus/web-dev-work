@@ -14,7 +14,7 @@ import { api } from './session'
   }
  */
 export interface Biometric {
-  _id:string
+  _id: string
   userId: number
   height: number
   heightUnit: string
@@ -24,6 +24,7 @@ export interface Biometric {
   dateOfBirth: string
 }
 
+// Used once user is logged in to fix calories, and when user navigates to home view.
 export function getBiometricById(id: number): Promise<DataEnvelope<Biometric>> {
   return api('biometrics/' + id)
 }

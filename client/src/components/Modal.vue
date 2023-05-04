@@ -17,7 +17,9 @@ const emit = defineEmits<{
       <header class="modal-card-head">
         <slot name="header">
           <p class="modal-card-title">{{ props.title }}</p>
-          <button class="delete" aria-label="close" @click="emit('update:isOpen', false)"></button>
+          <slot name="delete">
+            <button class="delete" aria-label="close" @click="emit('update:isOpen', false)"></button>
+          </slot>
         </slot>
       </header>
       <section class="modal-card-body">

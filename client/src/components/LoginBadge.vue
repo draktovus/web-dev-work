@@ -2,8 +2,8 @@
 import { useSession, useLogout } from '@/models/session'
 import { RouterLink } from 'vue-router'
 
-const session = useSession();
-const logout = useLogout();
+const session = useSession()
+const logout = useLogout()
 </script>
 
 <template>

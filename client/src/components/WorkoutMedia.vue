@@ -4,12 +4,13 @@ import { useSession } from '@/models/session'
 import { getUser, type User } from '@/models/users'
 import type { Workout } from '@/models/workout'
 import { ref } from 'vue'
+import { calculateWorkoutCalories } from '@/models/statistics'
 
 const session = useSession()
 const user = ref<User>({} as User)
 
 const props = defineProps<{
-  workout: Workout,
+  workout: Workout
   isDeleteActive?: boolean
 }>()
 
@@ -41,23 +42,50 @@ getUser(props.workout.userID).then((res) => {
         <p>
           {{ workout.content }}
         </p>
-        <div class="columns">
-          <div class="column">
-            <figure class="image is-16by9">
-              <img :src="workout.picture" alt="placeholder image" />
-            </figure>
-            <div class="columns">
-              <div class="column has-text-centered">
-                <h1 class="title is-size-5">
-                  {{ displayDistanceOfWorkout(workout).toFixed(2) }} {{ getDistanceUnit() }}
-                </h1>
-              </div>
-              <div class="column has-text-centered">
-                <h1 class="title is-size-5">{{ workout.duration }} {{ workout.durationUnit }}</h1>
-              </div>
+
+        <div class="container">
+          <div class="columns is-centered">
+            <div class="column is-4">
+              <figure class="image">
+                <img :src="workout.picture" alt="placeholder image" />
+              </figure>
             </div>
           </div>
         </div>
+
+        <nav class="level">
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">Distance</p>
+              <p class="title is-4">
+                {{ displayDistanceOfWorkout(workout).toFixed(2) }} {{ getDistanceUnit() }}
+              </p>
+            </div>
+          </div>
+
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">Time</p>
+              <p class="title is-4">{{ workout.duration }} {{ workout.durationUnit }}</p>
+            </div>
+          </div>
+
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">Calories</p>
+              <p class="title is-4">{{ calculateWorkoutCalories(workout).toFixed(2) }} kCals</p>
+            </div>
+          </div>
+
+          <div class="level-item has-text-centered">
+            <div>
+              <p class="heading">Type</p>
+              <p class="title is-4">
+                {{ workout.type }}
+              </p>
+            </div>
+          </div>
+        </nav>
       </div>
       <nav class="level is-mobile">
         <div class="level-left">

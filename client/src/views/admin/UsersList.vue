@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { RouterLink } from 'vue-router';
+import { RouterLink } from 'vue-router'
 import { getUsers, type User, deleteUser } from '@/models/users'
 import { ref } from 'vue'
-import { addMessage } from '@/models/session';
-import { confirm } from '@/models/generalModals';
+import { addMessage } from '@/models/session'
+import { confirm } from '@/models/generalModals'
 import { state } from '@/models/generalModals'
 import GeneralModal from '@/components/GeneralModal.vue'
 
@@ -13,18 +13,17 @@ getUsers().then((res) => {
   users.value = res.data
 })
 
-function delUser(user: User, index:number){
+function delUser(user: User, index: number) {
   confirm('Are you sure you want to delete this user?', 'Deletion')
-  .then(()=>{
-    deleteUser(user).then(response=>{
-    addMessage('Deleted user ' + user.name, 'success')
-    users.value.splice(index, 1)
-  })
-  })
-  .catch(()=>{
-    addMessage("Did not delete user " + user.name, 'info')
-  })
-  
+    .then(() => {
+      deleteUser(user).then((response) => {
+        addMessage('Deleted user ' + user.name, 'success')
+        users.value.splice(index, 1)
+      })
+    })
+    .catch(() => {
+      addMessage('Did not delete user ' + user.name, 'info')
+    })
 }
 </script>
 
@@ -50,7 +49,7 @@ function delUser(user: User, index:number){
         </li>
       </ul>
     </nav>
-    
+
     <RouterLink :to="'/admin/users/edit/'" class="button is-success">
       <span class="icon-text">
         <span class="icon">
@@ -59,7 +58,7 @@ function delUser(user: User, index:number){
         <span> Add User </span>
       </span>
     </RouterLink>
-  
+
     <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
       <thead>
         <tr>
@@ -74,7 +73,7 @@ function delUser(user: User, index:number){
       </thead>
       <tfoot></tfoot>
       <tbody>
-        <template v-for="user,i in users" :key="user.id">
+        <template v-for="(user, i) in users" :key="user.id">
           <tr>
             <td>
               <figure class="image is-square">

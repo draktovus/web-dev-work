@@ -1,7 +1,7 @@
 import { ref } from 'vue'
 import type { Workout } from './workout'
 
-export const measurementSystem = ref<'imperial'|'metric'>('imperial')
+export const measurementSystem = ref<'imperial' | 'metric'>('imperial')
 
 export function toggleMeasurement() {
   if (measurementSystem.value == 'imperial') {
@@ -66,6 +66,6 @@ export function displayDistance(number: number, type: 'imperial' | 'metric') {
   }
 }
 
-export function displayDistanceAsNumber(number:number, type:'imperial'|'metric'){
+export function displayDistanceAsNumber(number: number, type: 'imperial' | 'metric') {
   return Number(displayDistance(number, type))
 }

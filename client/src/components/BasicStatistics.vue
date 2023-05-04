@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { getDistanceUnit, getPaceUnit } from '@/models/measurement'
 import { useSession } from '@/models/session'
-import { getWorkoutsByUserId, type Workout } from '@/models/workout'
-import { calcStats, useStats } from '@/models/statistics'
+import { getWorkoutsByUserId } from '@/models/workout'
+import { calcStats, useStats, updateWeight } from '@/models/statistics'
 import { ref } from 'vue'
 import { getBiometricById, type Biometric } from '@/models/biometrics'
 
@@ -14,33 +14,38 @@ getWorkoutsByUserId(session.user ? session.user._id : '').then((res) => {
 const stats = useStats()
 
 const biometrics = ref<Biometric>({} as Biometric)
-getBiometricById(session.user ? session.user.id : 0).then((res) => {
-  if (res.data == null) {
+getBiometricById(session.user ? session.user.id : 0)
+  .then((res) => {
+    if (res.data == null) {
+      biometrics.value = {
+        userId: 1,
+        height: 50,
+        heightUnit: 'metric',
+        weight: 10,
+        weightUnit: 'kg',
+        gender: 'male',
+        dateOfBirth: '2000-01-01'
+      } as Biometric
+    } else {
+      biometrics.value = res.data
+    }
+  })
+  .catch((err) => {
+    console.log(err)
+    // placeholder data
     biometrics.value = {
-      "userId": 1,
-      "height": 50,
-      "heightUnit": "metric",
-      "weight": 10,
-      "weightUnit": "kg",
-      "gender": "male",
-      "dateOfBirth": "2000-01-01"
+      userId: 1,
+      height: 50,
+      heightUnit: 'metric',
+      weight: 10,
+      weightUnit: 'kg',
+      gender: 'male',
+      dateOfBirth: '2000-01-01'
     } as Biometric
-  }else{
-    biometrics.value = res.data
-  }
-}).catch(err=>{
-  console.log(err)
-  // placeholder data
-  biometrics.value = {
-    "userId": 1,
-    "height": 50,
-    "heightUnit": "metric",
-    "weight": 10,
-    "weightUnit": "kg",
-    "gender": "male",
-    "dateOfBirth": "2000-01-01"
-  } as Biometric
-})
+  })
+  .finally(() => {
+    updateWeight(biometrics.value.weight)
+  })
 </script>
 
 <template>

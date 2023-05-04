@@ -43,10 +43,10 @@ export function updateUser(user: User): Promise<DataEnvelope<User>> {
   return api('users/update', user, 'PATCH')
 }
 
-export function addUser(user:User): Promise<DataEnvelope<User>>{
+export function addUser(user: User): Promise<DataEnvelope<User>> {
   return api('users/add', user, 'POST')
 }
 
-export function deleteUser(user:User): Promise<DataEnvelope<User>>{
+export function deleteUser(user: User): Promise<DataEnvelope<User>> {
   return api('users', user, 'DELETE')
 }

@@ -17,7 +17,7 @@ import { api } from './session'
     },
 */
 export interface Workout {
-  _id:string
+  _id: string
   userID: string
   title: string
   content: string
@@ -25,20 +25,20 @@ export interface Workout {
   distance: number
   distanceUnit: string
   duration: number
-  durationUnit: string
+  durationUnit: 'hours' | 'minutes' | 'seconds'
   location: string
   date: Date
   type: string
 }
 
 export type WorkoutForm = {
-  _id:string
+  _id: string
   userID: string
   title: string
   content: string
   picture: string
   distance: number
-  distanceUnit: "miles" | 'kilometers'
+  distanceUnit: 'miles' | 'kilometers'
   duration: number
   durationUnit: 'minutes' | 'hours' | 'seconds'
   location: string

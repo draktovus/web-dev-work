@@ -7,7 +7,7 @@ import { addMessage } from '@/models/session'
 const user = ref<User>({} as User)
 const route = useRoute()
 
-if (route.params.id !== "") {
+if (route.params.id !== '') {
   getUser(route.params.id as string).then((data) => {
     user.value = data.data ?? ({} as User)
   })
@@ -101,11 +101,11 @@ function cancel() {
         <div class="field is-grouped">
           <div class="control">
             <label class="radio button">
-              <input type="radio" name="admin" v-model="user.isAdmin" :value="true">
+              <input type="radio" name="admin" v-model="user.isAdmin" :value="true" />
               True
             </label>
             <label class="radio button">
-              <input type="radio" name="admin" v-model="user.isAdmin" :value="false">
+              <input type="radio" name="admin" v-model="user.isAdmin" :value="false" />
               False
             </label>
           </div>
@@ -120,7 +120,6 @@ function cancel() {
           <button class="button is-link is-light" @click="cancel">Cancel</button>
         </div>
       </div>
-      
     </form>
   </div>
 </template>

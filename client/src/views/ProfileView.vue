@@ -29,7 +29,7 @@ function submit(form: WorkoutForm) {
     form.picture = 'https://bulma.io/images/placeholders/600x480.png'
   }
   form.userID = session.user ? session.user._id : ''
-  
+
   // Better way to copy an object
   // https://stackoverflow.com/questions/62847820/how-to-copy-json-object-without-reference-in-vue
   let item: Workout = JSON.parse(JSON.stringify(form))
@@ -62,13 +62,18 @@ getBiometricById(session.user ? session.user.id : 0).then((res) => {
 
 function deleteWorkout(workout: Workout) {
   console.log({ workout })
-  confirm('Are you sure you want to delete this workout?', 'Delete ' + workout.title)
+  confirm('Are you sure you want to delete this workout?', 'Delete ' + workout.title, {
+    confirmMessage: 'Delete workout',
+    confirmTag: 'danger',
+    cancelMessage: 'Cancel',
+    cancelTag: 'normal'
+  })
     .then((x) => {
       api(`workouts/ + ${session.user ? session.user.id : 0}`, workout, 'DELETE')
         .then((x) => {
           const i = workouts.value.findIndex((e) => e._id === workout._id)
           workouts.value.splice(i, 1)
-          addMessage('Sucessfully deleted workout', `${x.isSuccess ? 'success' : 'danger'}`)
+          addMessage('Successfully deleted workout', `${x.isSuccess ? 'success' : 'danger'}`)
         })
         .catch((x) => {
           addMessage(
@@ -86,13 +91,8 @@ function deleteWorkout(workout: Workout) {
 
 <template>
   <div>
-    <GeneralModal>
-      <template #footer>
-        <button class="button is-danger" @click="state.resolve">Delete</button>
-        <button class="button" @click="state.reject">Cancel</button>
-      </template>
-    </GeneralModal>
-  
+    <GeneralModal />
+
     <div class="columns is-centered" v-if="session.user">
       <div class="column">
         <div class="buttons">

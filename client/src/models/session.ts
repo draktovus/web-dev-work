@@ -3,15 +3,17 @@ import type { User } from '@/models/users'
 import { getUsers } from './users'
 import { useRouter } from 'vue-router'
 import * as customFetch from './customFetch'
+import { getBiometricById } from './biometrics'
+import { updateWeight } from './statistics'
 
 const session = reactive({
   user: null as User | null,
   isLoading: false as boolean,
   messages: [] as {
-    msg: string,
-    type: "success" | "danger" | "warning" | "info",
+    msg: string
+    type: 'success' | 'danger' | 'warning' | 'info'
   }[],
-  redirectUrl: null as string | null,
+  redirectUrl: null as string | null
 })
 
 export function useSession() {
@@ -22,13 +24,16 @@ export function useLogin() {
   const router = useRouter()
 
   return async function (user: any) {
-    const response = await api('users/login', { name: user.name, password: user.password }, 'POST');
-    
-    if (response === undefined){
+    const response = await api('users/login', { name: user.name, password: user.password }, 'POST')
+
+    if (response === undefined) {
       return
     }
     session.user = response.data.user
     session.user!.token = response.data.token
+    getBiometricById(session.user!.id).then((res) => {
+      updateWeight(res.data.weight)
+    })
 
     router.push(session.redirectUrl ?? '/')
     session.redirectUrl = null
@@ -52,7 +57,7 @@ export function api(url: string, data?: any, method?: string, headers?: any) {
   if (session.user?.token) {
     headers = {
       ...headers,
-      "Authorization": `Bearer ${session.user?.token}`
+      Authorization: `Bearer ${session.user?.token}`
     }
   }
   return customFetch

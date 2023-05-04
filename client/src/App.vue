@@ -2,12 +2,11 @@
 import { RouterView } from 'vue-router'
 import NavBar from './components/NavBar.vue'
 import TheFooter from './components/TheFooter.vue'
-
 </script>
 
 <template>
   <NavBar />
-  <div class="section mt-5">
+  <div class="section">
     <RouterView v-slot="{ Component }">
       <transition name="fade" mode="out-in">
         <component :is="Component"></component>
@@ -18,8 +17,8 @@ import TheFooter from './components/TheFooter.vue'
 </template>
 
 <style scoped>
-.container, .section {
+.container,
+.section {
   min-height: 75vh;
 }
-
 </style>

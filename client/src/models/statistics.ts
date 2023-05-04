@@ -21,10 +21,13 @@ const METS = {
   cardio: 10.0,
   strength: 9.0
 }
-const weight = 81
+const weight = ref(-1)
+
+export function updateWeight(num: number) {
+  weight.value = num
+}
 
 // DISTANCE STATS
-
 // Returns an imperial distance.
 function calculateDistance(array: Array<Workout>) {
   return array.reduce((totalDistance, item) => {
@@ -38,17 +41,14 @@ function calculateDistance(array: Array<Workout>) {
 const todayDistance = computed(() => {
   const distanceImperial = calculateDistance(todayWorkouts.value)
   return displayDistance(distanceImperial, 'imperial')
-  
 })
 const weekDistance = computed(() => {
   const distanceImperial = calculateDistance(weekWorkouts.value)
   return displayDistance(distanceImperial, 'imperial')
-
 })
 const AllTimeStatsDistance = computed(() => {
   const distanceImperial = calculateDistance(userWorkouts.value)
   return displayDistance(distanceImperial, 'imperial')
-
 })
 
 // DURATION STATS
@@ -102,7 +102,7 @@ const AllTimeStatsDuration = computed(() => {
 
 // PACE STATS
 function calculatePace(array: Array<Workout>, distance: number) {
-  //Get duration in seconds
+  // Get duration in seconds
   let seconds = 0
 
   array.forEach((workout) => {
@@ -133,26 +133,49 @@ const AllTimeStatsPace = computed(() => {
 })
 
 // CALORIES STATS
-function calculateCalories(array: Array<Workout>) {
-  return array
-    .reduce((total, workout) => {
-      if (workout.type == 'run') {
-        return total + ((METS.running * 3.5 * weight) / 200) * workout.duration
-      } else if (workout.type == 'walk') {
-        return total + ((METS.walking * 3.5 * weight) / 200) * workout.duration
-      } else if (workout.type == 'bike') {
-        return total + ((METS.biking * 3.5 * weight) / 200) * workout.duration
-      } else if (workout.type == 'cardio') {
-        return total + ((METS.cardio * 3.5 * weight) / 200) * workout.duration
-      } else {
-        return total + ((METS.strength * 3.5 * weight) / 200) * workout.duration
-      }
-    }, 0)
-    .toFixed(2)
+export function calculateWorkoutCalories(workout: Workout) {
+  // calcualted using metric
+  let calories = 0
+  const time = workout.duration
+  const timeType = workout.durationUnit
+  let convertedTime = workout.duration // assume its minutes
+  // covnert to minutes
+  if (timeType == 'seconds') {
+    convertedTime = time / 60
+  } else if (timeType == 'hours') {
+    convertedTime = time * 60
+  }
+  switch (workout.type) {
+    case 'run':
+      calories = ((METS.running * 3.5 * weight.value) / 200) * convertedTime
+      break
+    case 'walk':
+      calories = ((METS.walking * 3.5 * weight.value) / 200) * convertedTime
+      break
+    case 'bike':
+      calories = ((METS.biking * 3.5 * weight.value) / 200) * convertedTime
+      break
+    case 'cardio':
+      calories = ((METS.cardio * 3.5 * weight.value) / 200) * convertedTime
+      break
+    case 'strength':
+      calories = ((METS.strength * 3.5 * weight.value) / 200) * convertedTime
+      break
+    default:
+      calories = ((3 * 3.5 * weight.value) / 200) * convertedTime
+      break
+  }
+
+  return calories
 }
-const todayCalories = computed(() => calculateCalories(todayWorkouts.value))
-const weekCalories = computed(() => calculateCalories(weekWorkouts.value))
-const AllTimeStatsCalories = computed(() => calculateCalories(userWorkouts.value))
+function calculateCalories(array: Array<Workout>) {
+  return array.reduce((total, workout) => {
+    return total + calculateWorkoutCalories(workout)
+  }, 0)
+}
+const todayCalories = computed(() => calculateCalories(todayWorkouts.value).toFixed(2))
+const weekCalories = computed(() => calculateCalories(weekWorkouts.value).toFixed(2))
+const AllTimeStatsCalories = computed(() => calculateCalories(userWorkouts.value).toFixed(2))
 const stats = reactive({
   Today: {
     distance: todayDistance,
@@ -217,13 +240,11 @@ export function calcStats(UserWorkouts: Workout[]) {
 
 // Assumes month is 1-12, not 0-11 like javascript.
 // Does not account for different years, which is a bug.
-export function getDistancesByMonth(month:number){
+export function getDistancesByMonth(month: number) {
   month = month - 1
-  const workoutsMonth = userWorkouts.value.filter((entry)=>{
+  const workoutsMonth = userWorkouts.value.filter((entry) => {
     const date = new Date(entry.date)
-    return (
-      date.getUTCMonth() == month
-      )
+    return date.getUTCMonth() == month
   })
   return calculateDistance(workoutsMonth)
 }
