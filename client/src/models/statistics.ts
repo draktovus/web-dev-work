@@ -240,7 +240,8 @@ export function calcStats(UserWorkouts: Workout[]) {
 
 // Assumes month is 1-12, not 0-11 like javascript.
 // Does not account for different years, which is a bug.
-export function getDistancesByMonth(month: number) {
+// To account for this, a second paramater for a specified year could work.
+export function getDistancesByMonth(month:number){
   month = month - 1
   const workoutsMonth = userWorkouts.value.filter((entry) => {
     const date = new Date(entry.date)
