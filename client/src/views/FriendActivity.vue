@@ -29,8 +29,8 @@ const noFriends = ref(false)
       <template v-if="noFriends">
         <p class="content is-size-4">
           Looks like you have no friends, but thats ok! While there is no actual friend request
-          system, try making and logging into a new user and adding a workout. Then, logging back into this account, you should see it pop
-          up here! Here, everyone is your friend! &#128512;
+          system, try making and logging into a new user and adding a workout. Then, logging back
+          into this account, you should see it pop up here! Here, everyone is your friend! &#128512;
         </p>
       </template>
       <template v-for="workout in allWorkouts" :key="workout.userID">
