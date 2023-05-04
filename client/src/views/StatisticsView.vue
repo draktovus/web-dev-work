@@ -11,7 +11,7 @@ const session = useSession()
 onMounted(() => {
   getWorkoutsByUserId(session.user ? session.user._id : '')
     .then((res) => {
-      console.log(res.data)
+      //console.log(res.data)
       calcStats(res.data)
     })
     .then(() => {
@@ -90,7 +90,7 @@ async function initChart() {
       pieChart.draw(data, pieOptions)
     }
     watch(measurementSystem, () => {
-      console.log('graph should change to ' + measurementSystem.value)
+      //console.log('graph should change to ' + measurementSystem.value)
       for (let i = 0; i < 12; i++) {
         data.setValue(i, 1, displayDistanceAsNumber(getDistancesByMonth(i + 1), 'imperial'))
       }
