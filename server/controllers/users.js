@@ -4,11 +4,12 @@ const router = express.Router();
 const { requireLogin } = require("../middleware/authorization");
 
 router
-  .get("/:id", requireLogin(true), (req, res, next) => {
+  .get("/:id", requireLogin(false), (req, res, next) => {
     const id = req.params.id;
     model
       .getById(id)
       .then((list) => {
+        list = {...list, password: undefined}
         const data = {
           data: list,
           total: 1,
@@ -33,7 +34,7 @@ router
       .catch(next);
   })
 
-  .get("/search/:q", requireLogin(true), (req, res, next) => {
+  .get("/search/:q", requireLogin(false), (req, res, next) => {
     const term = req.params.q;
     model
       .search(term)
