@@ -40,6 +40,9 @@ getUser(props.workout.userID).then((res) => {
         <br />
         <h6 class="mt-2">{{ workout.title }}</h6>
         <p>
+           {{ workout.taggedUsers ? workout.taggedUsers : null }} 
+        </p>
+        <p>
           {{ workout.content }}
         </p>
 
