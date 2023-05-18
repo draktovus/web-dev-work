@@ -37,7 +37,7 @@ router
   .get("/search/:q", requireLogin(false), (req, res, next) => {
     const term = req.params.q;
     model
-      .search(term)
+      .search(term, +req.query.page, +req.query.pageSize)
       .then((list) => {
         const data = {
           data: list.items,

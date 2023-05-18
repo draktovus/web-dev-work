@@ -50,3 +50,7 @@ export function addUser(user: User): Promise<DataEnvelope<User>> {
 export function deleteUser(user: User): Promise<DataEnvelope<User>> {
   return api('users', user, 'DELETE')
 }
+
+export function searchUsers(name:string): Promise<DataListEnvelope<User>>{
+  return api('users/search/' + name)
+}

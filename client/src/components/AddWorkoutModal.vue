@@ -1,9 +1,18 @@
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive, ref } from 'vue'
 import type { WorkoutForm } from '@/models/workout'
 import { useSession } from '@/models/session'
+import { searchUsers as searchAPI } from '@/models/users'
+import AutoComplete from 'primevue/autocomplete';
 
 const session = useSession()
+
+const UsersQuery = ref<String[]>([]);
+
+const search = async (event:{query:string}) => {
+  const res = await searchAPI(event.query)
+  UsersQuery.value = res.data.filter((user)=>user.name.includes(event.query)).map((item)=>`${item.firstName} ${item.lastName}`)
+}
 
 defineProps<{
   isModalActive: boolean
@@ -34,7 +43,8 @@ const formInfo = reactive<WorkoutForm>({
   durationUnit: 'minutes',
   location: '',
   date: '',
-  type: 'run'
+  type: 'run',
+  taggedUsers: ''
 } as WorkoutForm)
 
 /**reactive({
@@ -192,6 +202,19 @@ const formInfo = reactive<WorkoutForm>({
                     <option value="strength">Strength</option>
                   </select>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Users Autocompletion -->
+        <div class="field is-horizontal">
+          <div class="field-label is-normal">
+            <label class="label">Tag Friends</label>
+          </div>
+          <div class="field-body">
+            <div class="field">
+              <div class="control is-expanded">
+                  <AutoComplete v-model="formInfo.taggedUsers" :suggestions="UsersQuery" multiple dropdown @complete="search" />
               </div>
             </div>
           </div>

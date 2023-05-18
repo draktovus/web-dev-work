@@ -29,6 +29,7 @@ export interface Workout {
   location: string
   date: Date
   type: string
+  taggedUsers?: string
 }
 
 export type WorkoutForm = {
@@ -44,6 +45,7 @@ export type WorkoutForm = {
   location: string
   date: string
   type: 'run' | 'walk' | 'cardio' | 'bike' | 'strength'
+  taggedUsers?: string
 }
 
 export function getWorkouts(): Promise<DataListEnvelope<Workout>> {
